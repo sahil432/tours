@@ -1,0 +1,17 @@
+uuid: 9b422c57-a67d-4118-9e2a-56e7e3cda717
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: bookable_calendar.bookable_calendar
+target_entity_type_id: bookable_calendar
+target_bundle: bookable_calendar
+default_langcode: site_default
+language_alterable: false

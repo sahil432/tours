@@ -1,0 +1,11 @@
+uuid: aefc30b4-85aa-429c-8192-fc3b5c871cd8
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: bookable_calendar.token
+label: Token
+description: null
+targetEntityType: bookable_calendar
+cache: true

@@ -1,0 +1,18 @@
+uuid: 4232d634-fbdd-477f-af52-f35021a1fc6b
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: bookable_calendar.bookable_calendar.notification_email_subject_cancel
+field_name: notification_email_subject_cancel
+entity_type: bookable_calendar
+bundle: bookable_calendar
+label: 'User Email Subject  for cancellations'
+description: 'The subject of the email for cancellations sent to the user if Override Default User Email is set'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

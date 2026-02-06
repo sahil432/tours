@@ -1,0 +1,11 @@
+uuid: c9ab0cac-fd78-4201-a9b0-93dfa8fde56a
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: booking_contact.token
+label: Token
+description: null
+targetEntityType: booking_contact
+cache: true

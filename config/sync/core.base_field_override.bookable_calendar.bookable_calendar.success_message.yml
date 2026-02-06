@@ -1,0 +1,20 @@
+uuid: d7c1da7a-5cb0-45a8-9f79-7ecd816985c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+    - text
+id: bookable_calendar.bookable_calendar.success_message
+field_name: success_message
+entity_type: bookable_calendar
+bundle: bookable_calendar
+label: 'Success message'
+description: 'Message displayed after a sucessful registration.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

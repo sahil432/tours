@@ -1,0 +1,18 @@
+uuid: 43ef762c-d043-4f9d-a9c1-5cdf5fe1e6d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: bookable_calendar.bookable_calendar.notification_email_subject
+field_name: notification_email_subject
+entity_type: bookable_calendar
+bundle: bookable_calendar
+label: 'User Email Subject'
+description: 'The subject of the email sent to the user if Override Default User Email is set'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

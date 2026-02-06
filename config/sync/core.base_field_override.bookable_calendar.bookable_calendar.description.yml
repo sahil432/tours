@@ -1,0 +1,20 @@
+uuid: a94fc4d9-a019-4a08-bf67-b2459a90a7bb
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+    - text
+id: bookable_calendar.bookable_calendar.description
+field_name: description
+entity_type: bookable_calendar
+bundle: bookable_calendar
+label: Description
+description: 'A description of the bookable calendar.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

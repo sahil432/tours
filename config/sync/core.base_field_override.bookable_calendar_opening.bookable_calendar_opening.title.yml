@@ -1,0 +1,18 @@
+uuid: ef211898-85fc-49fa-b4ae-2ab0d8fcb330
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: bookable_calendar_opening.bookable_calendar_opening.title
+field_name: title
+entity_type: bookable_calendar_opening
+bundle: bookable_calendar_opening
+label: Title
+description: 'The title of the bookable calendar opening entity.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

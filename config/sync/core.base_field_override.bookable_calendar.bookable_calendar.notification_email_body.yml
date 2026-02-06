@@ -1,0 +1,20 @@
+uuid: cdfa93e2-048e-4c55-a3df-5d4584f55b08
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+    - text
+id: bookable_calendar.bookable_calendar.notification_email_body
+field_name: notification_email_body
+entity_type: bookable_calendar
+bundle: bookable_calendar
+label: 'User Email Body'
+description: 'The body of the email sent to the user if Override Default User Email is set'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long
