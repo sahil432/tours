@@ -1,0 +1,84 @@
+uuid: 7b17c960-61af-4033-83cf-48b2ba48bf20
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.tour.field_arrival_airport
+    - field.field.node.tour.field_maximum_pax
+    - field.field.node.tour.field_minimum_pax
+    - field.field.node.tour.field_number_of_days
+    - field.field.node.tour.field_start_city
+    - field.field.node.tour.field_trip_itinerary
+    - node.type.tour
+  module:
+    - entity_reference_revisions
+    - user
+id: node.tour.default
+targetEntityType: node
+bundle: tour
+mode: default
+content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
+  field_arrival_airport:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_maximum_pax:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_minimum_pax:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_number_of_days:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_start_city:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_trip_itinerary:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

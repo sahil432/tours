@@ -1,0 +1,18 @@
+uuid: 64b65b03-8d8e-450e-ba98-0f0478e74ced
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.tour
+id: node.tour.title
+field_name: title
+entity_type: node
+bundle: tour
+label: 'Tour Code'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,7 @@
+name: Itinerary Helper
+type: module
+description: Alters paragraph admin label to show Itinerary Day numbers.
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - paragraphs:paragraphs

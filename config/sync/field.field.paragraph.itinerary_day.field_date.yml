@@ -1,0 +1,21 @@
+uuid: 4624d745-5165-4156-9077-18903535f163
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_date
+    - paragraphs.paragraphs_type.itinerary_day
+  module:
+    - datetime
+id: paragraph.itinerary_day.field_date
+field_name: field_date
+entity_type: paragraph
+bundle: itinerary_day
+label: Date
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Drupal Project">
+  <rule ref="DrupalPractice"/>
+  <rule ref="Drupal"/>
+  <exclude name="Drupal.Commenting.ClassComment"/>
+</ruleset>

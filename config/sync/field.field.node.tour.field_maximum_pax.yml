@@ -1,0 +1,23 @@
+uuid: 7a7df90e-0bc5-4c4b-a2d4-bd26f1d04557
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_maximum_pax
+    - node.type.tour
+id: node.tour.field_maximum_pax
+field_name: field_maximum_pax
+entity_type: node
+bundle: tour
+label: 'Maximum Pax'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

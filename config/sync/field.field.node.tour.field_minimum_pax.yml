@@ -1,0 +1,23 @@
+uuid: a4c60967-a6ff-4266-a928-7623e71a2064
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_minimum_pax
+    - node.type.tour
+id: node.tour.field_minimum_pax
+field_name: field_minimum_pax
+entity_type: node
+bundle: tour
+label: 'Minimum Pax'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

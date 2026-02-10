@@ -1,0 +1,24 @@
+uuid: 3288e05f-7345-47e0-8781-4f6a74ff9553
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.itinerary_day.field_date
+    - paragraphs.paragraphs_type.itinerary_day
+  module:
+    - datetime
+id: paragraph.itinerary_day.default
+targetEntityType: paragraph
+bundle: itinerary_day
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

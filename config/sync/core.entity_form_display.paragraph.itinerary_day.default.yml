@@ -1,0 +1,23 @@
+uuid: 933b4218-5d8f-4f88-8848-59b71ab9051e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.itinerary_day.field_date
+    - paragraphs.paragraphs_type.itinerary_day
+  module:
+    - datetime
+id: paragraph.itinerary_day.default
+targetEntityType: paragraph
+bundle: itinerary_day
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

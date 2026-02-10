@@ -1,0 +1,20 @@
+uuid: 8e4503fa-0033-4ef2-8679-046f6be47cd9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_maximum_pax
+field_name: field_maximum_pax
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

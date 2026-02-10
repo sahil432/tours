@@ -1,0 +1,21 @@
+uuid: 741c55f4-4960-4fe6-9249-606d27426ff1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_arrival_airport
+field_name: field_arrival_airport
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

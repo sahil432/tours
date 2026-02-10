@@ -1,0 +1,23 @@
+uuid: 94f0a93b-fe28-44f9-b761-152ef222b22e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_number_of_days
+    - node.type.tour
+id: node.tour.field_number_of_days
+field_name: field_number_of_days
+entity_type: node
+bundle: tour
+label: 'Number of days'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
