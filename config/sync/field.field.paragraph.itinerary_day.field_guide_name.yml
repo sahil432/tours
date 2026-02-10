@@ -1,0 +1,19 @@
+uuid: dd974d6e-e935-4543-9cb4-9887c1140897
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_guide_name
+    - paragraphs.paragraphs_type.itinerary_day
+id: paragraph.itinerary_day.field_guide_name
+field_name: field_guide_name
+entity_type: paragraph
+bundle: itinerary_day
+label: 'Guide Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,9 @@
+uuid: af1c2a25-1526-4f0b-ae1f-8528e6091c53
+langcode: en
+status: true
+dependencies: {  }
+name: Sightseeing
+vid: sightseeing
+description: null
+weight: 0
+new_revision: false

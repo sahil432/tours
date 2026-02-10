@@ -1,0 +1,26 @@
+uuid: d3007cd2-ce3e-479e-bd18-253f7635a5c1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_additional_comments
+    - filter.format.basic_html
+    - filter.format.full_html
+    - paragraphs.paragraphs_type.itinerary_day
+  module:
+    - text
+id: paragraph.itinerary_day.field_additional_comments
+field_name: field_additional_comments
+entity_type: paragraph
+bundle: itinerary_day
+label: 'Additional comments'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+    - full_html
+field_type: text_long

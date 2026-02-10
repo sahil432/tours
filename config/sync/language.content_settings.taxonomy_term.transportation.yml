@@ -1,0 +1,11 @@
+uuid: 5d9ce962-2331-4efd-9c4d-71ee0855ed96
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.transportation
+id: taxonomy_term.transportation
+target_entity_type_id: taxonomy_term
+target_bundle: transportation
+default_langcode: site_default
+language_alterable: false

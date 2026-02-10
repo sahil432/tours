@@ -1,0 +1,9 @@
+uuid: 366e58e3-678f-41dc-b5d9-267339073ad5
+langcode: en
+status: true
+dependencies: {  }
+name: Activities
+vid: activities
+description: null
+weight: 0
+new_revision: false

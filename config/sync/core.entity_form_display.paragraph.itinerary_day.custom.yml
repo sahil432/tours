@@ -1,8 +1,9 @@
-uuid: 3288e05f-7345-47e0-8781-4f6a74ff9553
+uuid: 877144a5-421b-47aa-98ac-4e997b9c5f39
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_form_mode.paragraph.custom
     - field.field.paragraph.itinerary_day.field_activities
     - field.field.paragraph.itinerary_day.field_additional_comments
     - field.field.paragraph.itinerary_day.field_city
@@ -12,67 +13,67 @@ dependencies:
     - field.field.paragraph.itinerary_day.field_transportation
     - paragraphs.paragraphs_type.itinerary_day
   module:
-    - datetime
     - text
-id: paragraph.itinerary_day.default
+id: paragraph.itinerary_day.custom
 targetEntityType: paragraph
 bundle: itinerary_day
-mode: default
+mode: custom
 content:
   field_activities:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 0
-    region: content
-  field_additional_comments:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 6
-    region: content
-  field_city:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
+    type: entity_reference_autocomplete
     weight: 2
     region: content
-  field_date:
-    type: datetime_default
-    label: above
     settings:
-      timezone_override: ''
-      format_type: medium
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    weight: 1
-    region: content
-  field_guide_name:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  field_sightseeing:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_transportation:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
+  field_additional_comments:
+    type: text_textarea
     weight: 5
     region: content
-hidden: {  }
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_city:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_guide_name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_sightseeing:
+    type: entity_reference_autocomplete
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_transportation:
+    type: entity_reference_autocomplete
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_date: true
+  status: true

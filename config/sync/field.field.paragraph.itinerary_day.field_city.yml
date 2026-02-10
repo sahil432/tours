@@ -1,0 +1,19 @@
+uuid: 90135abd-0d37-4f01-8993-b941bddfa351
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_city
+    - paragraphs.paragraphs_type.itinerary_day
+id: paragraph.itinerary_day.field_city
+field_name: field_city
+entity_type: paragraph
+bundle: itinerary_day
+label: City
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

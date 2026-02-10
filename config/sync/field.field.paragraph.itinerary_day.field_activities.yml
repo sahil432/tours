@@ -1,0 +1,29 @@
+uuid: aeee8ba2-fcee-484c-85dc-a82d9a89b68a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_activities
+    - paragraphs.paragraphs_type.itinerary_day
+    - taxonomy.vocabulary.activities
+id: paragraph.itinerary_day.field_activities
+field_name: field_activities
+entity_type: paragraph
+bundle: itinerary_day
+label: Activities
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      activities: activities
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

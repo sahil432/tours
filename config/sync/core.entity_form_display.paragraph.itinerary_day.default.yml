@@ -3,20 +3,81 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.itinerary_day.field_activities
+    - field.field.paragraph.itinerary_day.field_additional_comments
+    - field.field.paragraph.itinerary_day.field_city
     - field.field.paragraph.itinerary_day.field_date
+    - field.field.paragraph.itinerary_day.field_guide_name
+    - field.field.paragraph.itinerary_day.field_sightseeing
+    - field.field.paragraph.itinerary_day.field_transportation
     - paragraphs.paragraphs_type.itinerary_day
   module:
     - datetime
+    - text
 id: paragraph.itinerary_day.default
 targetEntityType: paragraph
 bundle: itinerary_day
 mode: default
 content:
+  field_activities:
+    type: entity_reference_autocomplete
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_additional_comments:
+    type: text_textarea
+    weight: 6
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_city:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_date:
     type: datetime_default
     weight: 0
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_guide_name:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_sightseeing:
+    type: entity_reference_autocomplete
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_transportation:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true
