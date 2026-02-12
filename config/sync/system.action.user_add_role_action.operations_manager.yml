@@ -1,0 +1,14 @@
+uuid: 480f2493-eaca-477a-b04a-809195326d1c
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.operations_manager
+  module:
+    - user
+id: user_add_role_action.operations_manager
+label: 'Add the Operations manager role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: operations_manager

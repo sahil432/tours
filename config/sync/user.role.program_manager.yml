@@ -1,0 +1,9 @@
+uuid: 894cece6-971a-4f95-a162-2bc0c97de9c4
+langcode: en
+status: true
+dependencies: {  }
+id: program_manager
+label: 'Program manager'
+weight: 4
+is_admin: false
+permissions: {  }

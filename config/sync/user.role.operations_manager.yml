@@ -1,0 +1,9 @@
+uuid: d7a6abd6-1548-4ee9-bc51-981d84f30fc4
+langcode: en
+status: true
+dependencies: {  }
+id: operations_manager
+label: 'Operations manager'
+weight: 5
+is_admin: false
+permissions: {  }

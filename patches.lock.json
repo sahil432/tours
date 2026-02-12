@@ -1,0 +1,17 @@
+{
+    "_hash": "cca937c9be8181be4b032cfce03afa3718b2a53f613fad4c4aad51f4cbea33c3",
+    "patches": {
+        "drupal/entity_redirect": [
+            {
+                "package": "drupal/entity_redirect",
+                "description": "3563436-Html::escape",
+                "url": "https://www.drupal.org/files/issues/2025-12-16/entity_redirect-no-null-html-placeholders-3563436-12.patch",
+                "sha256": "5226b2e84cd6c71c44fc71a0071d3309893ee7e70d06b529295b200023031759",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ]
+    }
+}

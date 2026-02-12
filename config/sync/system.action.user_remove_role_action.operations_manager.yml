@@ -1,0 +1,14 @@
+uuid: bfa3f57a-7b63-412b-a40c-ebff3487161f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.operations_manager
+  module:
+    - user
+id: user_remove_role_action.operations_manager
+label: 'Remove the Operations manager role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: operations_manager

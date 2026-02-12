@@ -5,12 +5,17 @@ namespace Drupal\itinerary_helper\Hook;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Form alter hooks for Itinerary Helper.
  */
 class ItineraryHooks {
   use StringTranslationTrait;
+
+  public function __construct(
+    private readonly RouteMatchInterface $routeMatch,
+  ) {}
 
   /**
    * Implements hook_form_alter().
@@ -27,7 +32,8 @@ class ItineraryHooks {
    */
   #[Hook('form_alter')]
   public function itineraryHelperFormAlter(array &$form, FormStateInterface $form_state, string $form_id) : void {
-    $route_name = \Drupal::routeMatch()->getRouteName();
+
+    $route_name = $this->routeMatch->getRouteName();
     // Disable widgets on both routes.
     if (in_array($route_name, [
       'entity.booking_contact.edit_form',
@@ -84,6 +90,30 @@ class ItineraryHooks {
       if (isset($local_tasks['tabs'][1][$plugin_id])) {
         unset($local_tasks['tabs'][1][$plugin_id]);
       }
+    }
+  }
+
+  /**
+   * Implements hook_form_FORM_ID_alter().
+   */
+  #[Hook('form_booking_contact_add_form_alter')]
+  public function formBookingContactAddFormAlter(
+    array &$form,
+    FormStateInterface $form_state,
+  ) {
+    $form['actions']['submit']['#submit'][] = [$this, 'bookingRedirectSubmit'];
+  }
+
+  /**
+   * Submit handler to redirect back to opening after booking.
+   */
+  public function bookingRedirectSubmit(array &$form, FormStateInterface $form_state): void {
+    $instance = $this->routeMatch->getParameter('opening_instance');
+    if ($instance) {
+      $form_state->setRedirect(
+        'entity.bookable_calendar_opening.canonical',
+        ['bookable_calendar_opening' => $instance->booking_opening->target_id]
+      );
     }
   }
 
