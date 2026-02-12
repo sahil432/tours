@@ -1,0 +1,28 @@
+uuid: 8e57e92b-b91f-4d44-871e-138c71d72239
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: bookable_calendar_opening_inst.bookable_calendar_opening_inst.default
+targetEntityType: bookable_calendar_opening_inst
+bundle: bookable_calendar_opening_inst
+mode: default
+content:
+  availability:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  book_link:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  available_slots: true
+  booking: true
+  booking_opening: true
+  date: true
+  max_slots: true
+  slots: true

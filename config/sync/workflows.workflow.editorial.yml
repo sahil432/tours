@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - node.type.tour
+    - node.type.tour_start
   module:
     - content_moderation
 _core:
@@ -75,4 +76,5 @@ type_settings:
   entity_types:
     node:
       - tour
+      - tour_start
   default_moderation_state: draft

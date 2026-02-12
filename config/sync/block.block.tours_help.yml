@@ -1,0 +1,22 @@
+uuid: 345cda5f-daf1-49a9-a48d-3aff898f54f8
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - tours
+_core:
+  default_config_hash: 8nOAry2oKqJOr0zbrlJ3sZHDFJLIO6j-0vT0K_TYca4
+id: tours_help
+theme: tours
+region: header
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

@@ -1,0 +1,18 @@
+uuid: 5e02ff5b-c810-4bc3-9cb7-13cd16c8a4f9
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Tour Start'
+type: tour_start
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

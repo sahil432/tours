@@ -1,0 +1,23 @@
+uuid: baa054fd-ed03-4457-8e74-5899d5834e6f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_base_price
+    - node.type.tour_start
+id: node.tour_start.field_base_price
+field_name: field_base_price
+entity_type: node
+bundle: tour_start
+label: 'Base Price'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

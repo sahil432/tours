@@ -1,0 +1,22 @@
+uuid: 66c75a44-eb06-4081-a033-d26fb80604cb
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - tours
+_core:
+  default_config_hash: y9X3xgCsO59pQyzNLzY1D3SDJJxCHILLWkpPnmuTJ2E
+id: tours_breadcrumbs
+theme: tours
+region: header
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

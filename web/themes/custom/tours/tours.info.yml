@@ -1,0 +1,16 @@
+name: Tours
+type: theme
+description: 'Custom admin theme Tours based on Gin.'
+core_version_requirement: ^11
+base theme: gin
+
+libraries:
+  - tours/global-styling
+
+regions:
+  header: Header
+  pre_content: Pre-content
+  content: Content
+  sidebar_first: Sidebar first
+  sidebar_second: Sidebar second
+  footer: Footer

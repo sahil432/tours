@@ -1,0 +1,26 @@
+uuid: bfe80714-15d3-4fba-b673-6d32a6ea2109
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.bookable_calendar_opening.field_tour_selection
+  module:
+    - bookable_calendar
+id: bookable_calendar_opening.bookable_calendar_opening.field_tour_selection
+field_name: field_tour_selection
+entity_type: bookable_calendar_opening
+bundle: bookable_calendar_opening
+label: 'Tour Start Selection'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: published_tour_start
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

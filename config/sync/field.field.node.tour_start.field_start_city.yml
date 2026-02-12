@@ -1,0 +1,19 @@
+uuid: cedbc016-101d-4418-808a-c246fd7a727d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_start_city
+    - node.type.tour_start
+id: node.tour_start.field_start_city
+field_name: field_start_city
+entity_type: node
+bundle: tour_start
+label: 'Start city'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

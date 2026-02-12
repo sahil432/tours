@@ -1,3 +1,15 @@
 _core:
   default_config_hash: jdY7AU0tU-QsjmiOw3W8vwpYMb-By--_MSFgbqKUTYM
-definitions: {  }
+definitions:
+  entity__booking_contact__collection:
+    enabled: false
+    menu_name: admin
+    parent: entity.bookable_calendar.collection
+    expanded: false
+    weight: 2
+  entity__bookable_calendar_opening_inst__collection:
+    enabled: false
+    menu_name: admin
+    parent: entity.bookable_calendar.collection
+    weight: 3
+    expanded: false

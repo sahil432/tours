@@ -1,0 +1,22 @@
+uuid: 3e907918-6761-4adc-9368-5fb9e8cc14cc
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - tours
+_core:
+  default_config_hash: hBHXB7hC05XU7pDYzETt-GUcpFlogK1gkjyAsg0Ym58
+id: tours_content
+theme: tours
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

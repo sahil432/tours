@@ -1,0 +1,20 @@
+uuid: 2687a1af-e288-48ab-924b-6d3d2280ea3d
+langcode: en
+status: true
+dependencies:
+  theme:
+    - tours
+_core:
+  default_config_hash: OQ9aJ-4qVwK1x00o9EOYK4eFDjQr_HLpbPiJaPSVZiQ
+id: tours_local_actions
+theme: tours
+region: content
+weight: -10
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

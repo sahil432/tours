@@ -1,0 +1,89 @@
+uuid: 27c81e37-66e1-4ed8-9549-2d97c50beef8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.bookable_calendar_opening.bookable_calendar_opening.field_tour_selection
+  module:
+    - bookable_calendar
+    - smart_date
+    - smart_date_recur
+id: bookable_calendar_opening.bookable_calendar_opening.default
+targetEntityType: bookable_calendar_opening
+bundle: bookable_calendar_opening
+mode: default
+content:
+  bookable_calendar:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  date:
+    type: smartdate_default
+    weight: 4
+    region: content
+    settings:
+      modal: true
+      default_duration: 60
+      default_duration_increments: |-
+        30
+        60|1 hour
+        90
+        120|2 hours
+        custom
+      show_extra: false
+      hide_date: true
+      allday: true
+      remove_seconds: false
+      duration_overlay: true
+    third_party_settings:
+      smart_date_recur:
+        allowed_recur_freq_values:
+          MINUTELY: MINUTELY
+          HOURLY: HOURLY
+          DAILY: DAILY
+          WEEKLY: WEEKLY
+          MONTHLY: MONTHLY
+          YEARLY: YEARLY
+  field_tour_selection:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 6
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  slots:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    widget_type: integer
+  status:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: false
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

@@ -27,6 +27,18 @@ class ItineraryHooks {
    */
   #[Hook('form_alter')]
   public function itineraryHelperFormAlter(array &$form, FormStateInterface $form_state, string $form_id) : void {
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    // Disable widgets on both routes.
+    if (in_array($route_name, [
+      'entity.booking_contact.edit_form',
+      'bookable_calendar.booking_contact.create',
+    ])) {
+
+      // Disable party_size widget if present.
+      if (isset($form['party_size']['widget'][0]['value'])) {
+        $form['party_size']['widget'][0]['value']['#disabled'] = TRUE;
+      }
+    }
 
     if (!isset($form['field_trip_itinerary']['widget'])) {
       return;
@@ -48,6 +60,29 @@ class ItineraryHooks {
                 '@number' => $day_number,
               ]
           );
+      }
+    }
+  }
+
+  /**
+   * Implements hook_menu_local_tasks_alter().
+   */
+  #[Hook('menu_local_tasks_alter')]
+  public function alterLocalTasks(array &$local_tasks) {
+    // Hiding Local task menu for bookable calender.
+    $remove = [
+      'bookable_calendar.opening_instances',
+      'bookable_calendar.booking_contacts',
+    ];
+
+    // Ensure tabs and secondary level exist.
+    if (!isset($local_tasks['tabs']) || !isset($local_tasks['tabs'][1])) {
+      return;
+    }
+
+    foreach ($remove as $plugin_id) {
+      if (isset($local_tasks['tabs'][1][$plugin_id])) {
+        unset($local_tasks['tabs'][1][$plugin_id]);
       }
     }
   }

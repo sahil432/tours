@@ -1,0 +1,21 @@
+uuid: 13858672-0bd4-4d1c-bd90-c4b63ad83572
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_start_end_date
+    - node.type.tour_start
+  module:
+    - datetime_range
+id: node.tour_start.field_start_end_date
+field_name: field_start_end_date
+entity_type: node
+bundle: tour_start
+label: 'Start-End Date'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

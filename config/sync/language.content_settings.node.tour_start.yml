@@ -1,0 +1,16 @@
+uuid: a7a55254-aaa5-4091-99b9-9201831f147a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.tour_start
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: node.tour_start
+target_entity_type_id: node
+target_bundle: tour_start
+default_langcode: site_default
+language_alterable: true

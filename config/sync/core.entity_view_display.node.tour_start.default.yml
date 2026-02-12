@@ -1,0 +1,104 @@
+uuid: 5ba6768c-e649-4595-a3ec-70c327086f9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.tour_start.field_arrival_airport
+    - field.field.node.tour_start.field_base_price
+    - field.field.node.tour_start.field_maximum_pax
+    - field.field.node.tour_start.field_minimum_pax
+    - field.field.node.tour_start.field_number_of_days
+    - field.field.node.tour_start.field_start_city
+    - field.field.node.tour_start.field_start_end_date
+    - field.field.node.tour_start.field_trip_itinerary
+    - node.type.tour_start
+  module:
+    - datetime_range
+    - entity_reference_revisions
+    - user
+id: node.tour_start.default
+targetEntityType: node
+bundle: tour_start
+mode: default
+content:
+  field_arrival_airport:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_base_price:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_maximum_pax:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_minimum_pax:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_number_of_days:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_start_city:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_start_end_date:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_trip_itinerary:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true
