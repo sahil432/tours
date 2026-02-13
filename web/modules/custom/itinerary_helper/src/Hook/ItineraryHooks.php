@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Database\Database;
 
 /**
  * Form alter hooks for Itinerary Helper.
@@ -32,6 +33,7 @@ class ItineraryHooks {
    */
   #[Hook('form_alter')]
   public function itineraryHelperFormAlter(array &$form, FormStateInterface $form_state, string $form_id) : void {
+    // dd($form_id);
     $route_name = $this->routeMatch->getRouteName();
     // Disable widgets on both routes.
     if (in_array($route_name, [
@@ -101,6 +103,7 @@ class ItineraryHooks {
     FormStateInterface $form_state,
   ) {
     $form['actions']['submit']['#submit'][] = [$this, 'bookingRedirectSubmit'];
+    $form['#validate'][] = [$this, 'roomCapacityValidate'];
   }
 
   /**
@@ -133,16 +136,46 @@ class ItineraryHooks {
    */
   public function calenderOpeningValidate(array &$form, FormStateInterface $form_state) {
     $formValues = $form_state->getValues();
-    $total_slots = $formValues['slots'][0]['value'];
-    $roomCount = $formValues['field_2_single_bed_s'][0]['value'] + $formValues['field_king_bed'][0]['value'] + $formValues['field_queen_bed'][0]['value'];
+    $total_slots = (int) $formValues['slots'][0]['value'];
+    $roomCount = (int) ($formValues['field_2_single_bed_s'][0]['value'] + $formValues['field_king_bed'][0]['value'] + $formValues['field_queen_bed'][0]['value']);
     if ($roomCount !== $total_slots) {
       $form_state->setErrorByName(
         'slots',
-        t('Total rooms (%rooms) must equal total slots (%slots).', [
+        $this->t('Total rooms (%rooms) must equal total slots (%slots).', [
           '%rooms' => $roomCount,
           '%slots' => $total_slots,
         ])
       );
+    }
+  }
+
+  /**
+   * Room Capacity Validator.
+   */
+  public function roomCapacityValidate(array &$form, FormStateInterface $form_state) {
+    $room_type = $form_state->getValue('field_room_type')[0]['value'];
+    if ($room_type === '_none') {
+      return;
+    }
+    if ($room_type) {
+      /** @var \Drupal\bookable_calendar\Entity\BookableCalendarOpeningInstance $instance */
+      $instance = $this->routeMatch->getParameter('opening_instance');
+      $opening = $instance->get('booking_opening')->entity;
+      $capacity = (int) $opening->get($room_type)->value;
+      // Count how many bookings already exist
+      // for this opening instance + room type.
+      $connection = Database::getConnection();
+      $query = $connection->select('booking_contact__field_room_type', 'rt');
+      $query->join('booking_contact', 'bc', 'bc.id = rt.entity_id');
+      $query->condition('rt.field_room_type_value', $room_type);
+      $query->condition('bc.booking_instance', $instance->id());
+      $count = $query->countQuery()->execute()->fetchField();
+      if ($count >= $capacity) {
+        $form_state->setErrorByName(
+          'field_room_type',
+          $this->t('Selected room type is fully booked for this date.')
+        );
+      }
     }
   }
 
