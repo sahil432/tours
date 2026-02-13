@@ -32,7 +32,6 @@ class ItineraryHooks {
    */
   #[Hook('form_alter')]
   public function itineraryHelperFormAlter(array &$form, FormStateInterface $form_state, string $form_id) : void {
-
     $route_name = $this->routeMatch->getRouteName();
     // Disable widgets on both routes.
     if (in_array($route_name, [
@@ -113,6 +112,36 @@ class ItineraryHooks {
       $form_state->setRedirect(
         'entity.bookable_calendar_opening.canonical',
         ['bookable_calendar_opening' => $instance->booking_opening->target_id]
+      );
+    }
+  }
+
+  /**
+  * Implements hook_form_FORM_ID_alter().
+  */
+  #[Hook('form_bookable_calendar_opening_edit_form_alter')]
+  #[Hook('form_bookable_calendar_opening_add_form_alter')]
+  public function formBookingopeningAddFormAlter(
+    array &$form,
+    FormStateInterface $form_state,
+  ) {
+    $form['#validate'][] = [$this, 'calenderOpeningValidate'];
+  }
+
+  /**
+   * Validate Callback.
+   */
+  public function calenderOpeningValidate(array &$form, FormStateInterface $form_state) {
+    $formValues = $form_state->getValues();
+    $total_slots = $formValues['slots'][0]['value'];
+    $roomCount = $formValues['field_2_single_bed_s'][0]['value'] + $formValues['field_king_bed'][0]['value'] + $formValues['field_queen_bed'][0]['value'];
+    if ($roomCount !== $total_slots) {
+      $form_state->setErrorByName(
+        'slots',
+        t('Total rooms (%rooms) must equal total slots (%slots).', [
+          '%rooms' => $roomCount,
+          '%slots' => $total_slots,
+        ])
       );
     }
   }

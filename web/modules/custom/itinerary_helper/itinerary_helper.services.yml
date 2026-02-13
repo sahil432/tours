@@ -1,0 +1,10 @@
+services:
+  itinerary_helper.bookable_calendar.renderer:
+    class: Drupal\itinerary_helper\Decorator\RendererDecorator
+    decorates: bookable_calendar.renderer
+    arguments:
+      - '@entity_type.manager'
+      - '@current_user'
+      - '@database'
+      - '@language_manager'
+      - '@date.formatter'

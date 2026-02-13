@@ -3,6 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.bookable_calendar_opening.bookable_calendar_opening.field_2_single_bed_s
+    - field.field.bookable_calendar_opening.bookable_calendar_opening.field_king_bed
+    - field.field.bookable_calendar_opening.bookable_calendar_opening.field_queen_bed
     - field.field.bookable_calendar_opening.bookable_calendar_opening.field_tour_selection
   module:
     - bookable_calendar
@@ -21,7 +24,7 @@ content:
     third_party_settings: {  }
   date:
     type: smartdate_default
-    weight: 4
+    weight: 7
     region: content
     settings:
       modal: true
@@ -46,6 +49,27 @@ content:
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
+  field_2_single_bed_s:
+    type: number
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_king_bed:
+    type: number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_queen_bed:
+    type: number
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_tour_selection:
     type: entity_reference_autocomplete
     weight: 2
@@ -58,7 +82,7 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 6
+    weight: 9
     region: content
     settings:
       include_locked: true
@@ -73,7 +97,7 @@ content:
     widget_type: integer
   status:
     type: boolean_checkbox
-    weight: 5
+    weight: 8
     region: content
     settings:
       display_label: false

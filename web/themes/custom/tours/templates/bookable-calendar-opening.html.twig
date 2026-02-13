@@ -54,7 +54,11 @@
 
       {# Book button #}
       <td>
-      {{ content.booking_instance }}
+        {% if content.status['#items'].value == 1 %}
+          {{ content.booking_instance }}
+        {% else %}
+          <em>—</em>
+        {% endif %}
       </td>
     </tr>
   </tbody>

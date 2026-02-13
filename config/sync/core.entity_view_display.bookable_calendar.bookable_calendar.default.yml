@@ -1,0 +1,30 @@
+uuid: a3d1a374-881e-4ba6-a759-50fe081f4454
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+    - text
+id: bookable_calendar.bookable_calendar.default
+targetEntityType: bookable_calendar
+bundle: bookable_calendar
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  instances: true
+  langcode: true

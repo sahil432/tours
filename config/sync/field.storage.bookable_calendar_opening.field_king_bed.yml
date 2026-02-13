@@ -1,0 +1,20 @@
+uuid: 5740693d-525a-4e38-ac44-de80c55f5f9e
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+id: bookable_calendar_opening.field_king_bed
+field_name: field_king_bed
+entity_type: bookable_calendar_opening
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
