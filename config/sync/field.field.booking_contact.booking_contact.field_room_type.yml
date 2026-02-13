@@ -1,0 +1,21 @@
+uuid: a2817d1e-603d-4d02-bba7-4607d9aa85e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.booking_contact.field_room_type
+  module:
+    - bookable_calendar
+    - options
+id: booking_contact.booking_contact.field_room_type
+field_name: field_room_type
+entity_type: booking_contact
+bundle: booking_contact
+label: 'Room Type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

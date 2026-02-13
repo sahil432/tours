@@ -166,10 +166,24 @@ class ItineraryHooks {
       // for this opening instance + room type.
       $connection = Database::getConnection();
       $query = $connection->select('booking_contact__field_room_type', 'rt');
+
+      // Join booking_contact.
       $query->join('booking_contact', 'bc', 'bc.id = rt.entity_id');
+
+      // Join booking_contact__booking (IMPORTANT LINK)
+      $query->join('booking_contact__booking', 'bcb', 'bcb.entity_id = bc.id');
+
+      // Join booking entity.
+      $query->join('booking', 'b', 'b.id = bcb.booking_target_id');
+
+      $query->condition('rt.deleted', 0);
+      $query->condition('bcb.deleted', 0);
       $query->condition('rt.field_room_type_value', $room_type);
-      $query->condition('bc.booking_instance', $instance->id());
-      $count = $query->countQuery()->execute()->fetchField();
+
+      // THIS is the real opening instance filter.
+      $query->condition('b.booking_instance', $instance->id());
+
+      $count = (int) $query->countQuery()->execute()->fetchField();
       if ($count >= $capacity) {
         $form_state->setErrorByName(
           'field_room_type',

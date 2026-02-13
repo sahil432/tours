@@ -1,0 +1,55 @@
+uuid: ac5acfc6-e235-46c1-b7ff-45f2ef58213d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.booking_contact.booking_contact.field_room_type
+  module:
+    - bookable_calendar
+id: booking_contact.booking_contact.default
+targetEntityType: booking_contact
+bundle: booking_contact
+mode: default
+content:
+  booking_instance:
+    type: entity_reference_autocomplete
+    weight: -5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  email:
+    type: email_default
+    weight: -4
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_room_type:
+    type: options_select
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  party_size:
+    type: number
+    weight: -3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }
