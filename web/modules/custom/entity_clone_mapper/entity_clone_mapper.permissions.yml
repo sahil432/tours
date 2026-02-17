@@ -1,0 +1,8 @@
+administer entity clone mapper:
+  title: 'Administer Entity Clone Mapper'
+  description: 'Configure entity clone mapping settings'
+  restrict access: true
+
+clone entities:
+  title: 'Clone Entities'
+  description: 'Clone entities from one type to another'

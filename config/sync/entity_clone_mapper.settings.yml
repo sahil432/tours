@@ -1,0 +1,35 @@
+_core:
+  default_config_hash: xx-xgW716-FBvCP_Vsq5OH3QNnHI3IJzSo395OnTHZs
+mappings:
+  -
+    enabled: true
+    source_entity_type: node
+    source_bundle: tour
+    target_entity_type: node
+    target_bundle: tour_start
+    clone_all_translations: true
+    field_mappings:
+      nid: ''
+      vid: ''
+      langcode: langcode
+      type: ''
+      revision_log: ''
+      status: ''
+      title: title
+      promote: ''
+      sticky: ''
+      default_langcode: ''
+      revision_default: ''
+      revision_translation_affected: ''
+      moderation_state: ''
+      path: ''
+      menu_link: ''
+      content_translation_source: content_translation_source
+      content_translation_outdated: ''
+      field_arrival_airport: field_arrival_airport
+      field_maximum_pax: field_maximum_pax
+      field_minimum_pax: field_minimum_pax
+      field_number_of_days: field_number_of_days
+      field_start_city: field_start_city
+      field_trip_itinerary: field_trip_itinerary
+    remove: 'Remove this mapping'

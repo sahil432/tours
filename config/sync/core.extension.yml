@@ -20,6 +20,7 @@ module:
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
+  entity_clone_mapper: 0
   entity_redirect: 0
   entity_reference_revisions: 0
   eva: 0

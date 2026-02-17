@@ -1,0 +1,6 @@
+entity_clone_mapper.admin:
+  title: 'Entity Clone Mapper'
+  route_name: entity_clone_mapper.settings
+  description: 'Configure entity cloning mappings'
+  parent: system.admin_config_content
+  weight: 10

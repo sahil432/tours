@@ -170,7 +170,7 @@ class ItineraryHooks {
       // Join booking_contact.
       $query->join('booking_contact', 'bc', 'bc.id = rt.entity_id');
 
-      // Join booking_contact__booking (IMPORTANT LINK)
+      // Join booking_contact__booking.
       $query->join('booking_contact__booking', 'bcb', 'bcb.entity_id = bc.id');
 
       // Join booking entity.

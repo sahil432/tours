@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Entity Clone Mapper module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_entity_operation().
+ */
+function entity_clone_mapper_entity_operation(EntityInterface $entity) {
+  $operations = [];
+
+  // Only add clone operation for nodes and taxonomy terms.
+  if (!in_array($entity->getEntityTypeId(), ['node', 'taxonomy_term'])) {
+    return $operations;
+  }
+
+  // Check if user has permission.
+  if (!\Drupal::currentUser()->hasPermission('clone entities')) {
+    return $operations;
+  }
+
+  // Check if there are any mappings configured for this entity.
+  $config = \Drupal::config('entity_clone_mapper.settings');
+  $mappings = $config->get('mappings') ?? [];
+
+  $entity_type_id = $entity->getEntityTypeId();
+  $bundle = $entity->bundle();
+  $has_mapping = FALSE;
+
+  foreach ($mappings as $mapping) {
+    if ($mapping['source_entity_type'] === $entity_type_id &&
+        $mapping['source_bundle'] === $bundle) {
+      $has_mapping = TRUE;
+      break;
+    }
+  }
+
+  if ($has_mapping) {
+    $operations['clone'] = [
+      'title' => t('Clone to another type'),
+      'weight' => 50,
+      'url' => Url::fromRoute('entity_clone_mapper.clone_entity', [
+        'entity_type' => $entity->getEntityTypeId(),
+        'entity' => $entity->id(),
+      ]),
+    ];
+  }
+
+  return $operations;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function entity_clone_mapper_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Add clone button to node edit forms.
+  if (preg_match('/^node_\w+_edit_form$/', $form_id) ||
+      preg_match('/^taxonomy_term_\w+_form$/', $form_id)) {
+
+    $entity = $form_state->getFormObject()->getEntity();
+
+    // Only show on existing entities.
+    if ($entity->isNew()) {
+      return;
+    }
+
+    // Check if user has permission.
+    if (!\Drupal::currentUser()->hasPermission('clone entities')) {
+      return;
+    }
+
+    // Check if there are any mappings configured for this entity.
+    $config = \Drupal::config('entity_clone_mapper.settings');
+    $mappings = $config->get('mappings') ?? [];
+
+    $entity_type_id = $entity->getEntityTypeId();
+    $bundle = $entity->bundle();
+    $has_mapping = FALSE;
+    foreach ($mappings as $mapping) {
+      if ($mapping['source_entity_type'] === $entity_type_id &&
+          $mapping['source_bundle'] === $bundle) {
+        $has_mapping = TRUE;
+        $type = $mapping['target_bundle'];
+        break;
+      }
+    }
+
+    if ($has_mapping) {
+      $form['actions']['clone'] = [
+        '#type' => 'link',
+        '#title' => \Drupal::translation()->translate('Clone to @type', [
+          '@type' => $type,
+        ]),
+        '#url' => Url::fromRoute('entity_clone_mapper.clone_entity', [
+          'entity_type' => $entity_type_id,
+          'entity' => $entity->id(),
+        ]),
+        '#attributes' => [
+          'class' => ['button', 'button--primary'],
+        ],
+        '#weight' => 10,
+      ];
+    }
+  }
+}

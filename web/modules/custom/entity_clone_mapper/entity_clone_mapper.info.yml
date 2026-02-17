@@ -1,0 +1,13 @@
+name: Entity Clone Mapper
+type: module
+description: 'Clone entities from one type to another with field mapping support'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:field
+  - drupal:language
+suggests:
+  - drupal:content_translation
+  - paragraphs:paragraphs
