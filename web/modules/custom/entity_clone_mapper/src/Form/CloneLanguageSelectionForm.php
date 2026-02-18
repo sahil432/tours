@@ -71,7 +71,7 @@ class CloneLanguageSelectionForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, EntityInterface $entity = NULL, array $mapping = []) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?EntityInterface $entity = NULL, array $mapping = []) {
     $this->entity = $entity;
     $this->mapping = $mapping;
 
@@ -92,7 +92,7 @@ class CloneLanguageSelectionForm extends FormBase {
     // Get available translations.
     $languages = $entity->getTranslationLanguages();
     $options = [];
-    
+
     foreach ($languages as $langcode => $language) {
       $options[$langcode] = $language->getName();
     }
@@ -129,10 +129,10 @@ class CloneLanguageSelectionForm extends FormBase {
 
       $form['all_translations_info'] = [
         '#type' => 'item',
-        '#markup' => '<div class="messages messages--status">' . 
-          $this->t('All @count translations will be cloned. Each translation will be created in unpublished state.', [
-            '@count' => count($options),
-          ]) . '</div>',
+        '#markup' => '<div class="messages messages--status">' .
+        $this->t('All @count translations will be cloned. Each translation will be created in unpublished state.', [
+          '@count' => count($options),
+        ]) . '</div>',
         '#states' => [
           'visible' => [
             ':input[name="clone_mode"]' => ['value' => 'all'],
@@ -153,9 +153,9 @@ class CloneLanguageSelectionForm extends FormBase {
       if (!$clone_all_enabled && count($options) > 1) {
         $form['info'] = [
           '#type' => 'item',
-          '#markup' => '<div class="messages messages--warning">' . 
-            $this->t('To clone all translations at once, enable "Clone all translations" in the mapping configuration.') . 
-            '</div>',
+          '#markup' => '<div class="messages messages--warning">' .
+          $this->t('To clone all translations at once, enable "Clone all translations" in the mapping configuration.') .
+          '</div>',
         ];
       }
     }
@@ -188,14 +188,15 @@ class CloneLanguageSelectionForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $clone_mode = $form_state->getValue('clone_mode');
     $language = $form_state->getValue('language');
-    
+
     // Determine if we should clone all translations.
     $clone_all = ($clone_mode === 'all');
-    
+
     // Update mapping to reflect user's choice.
     if ($clone_all) {
       $this->mapping['clone_all_translations'] = TRUE;
-      $language_code = NULL; // Will use entity's default language as base.
+      // Will use entity's default language as base.
+      $language_code = NULL;
     }
     else {
       $this->mapping['clone_all_translations'] = FALSE;
@@ -204,7 +205,7 @@ class CloneLanguageSelectionForm extends FormBase {
 
     try {
       $cloned_entity = $this->cloneService->cloneEntity($this->entity, $this->mapping, $language_code);
-      
+
       if ($clone_all) {
         $this->messenger()->addStatus($this->t('Entity and all translations cloned successfully. The new @type and its translations have been created in unpublished state.', [
           '@type' => $cloned_entity->getEntityType()->getLabel(),
@@ -216,7 +217,7 @@ class CloneLanguageSelectionForm extends FormBase {
           '@language' => $this->languageManager->getLanguage($language_code)->getName(),
         ]));
       }
-      
+
       // Redirect to the new entity's edit form.
       $form_state->setRedirect('entity.' . $cloned_entity->getEntityTypeId() . '.edit_form', [
         $cloned_entity->getEntityTypeId() => $cloned_entity->id(),
@@ -226,7 +227,7 @@ class CloneLanguageSelectionForm extends FormBase {
       $this->messenger()->addError($this->t('Error cloning entity: @message', [
         '@message' => $e->getMessage(),
       ]));
-      
+
       $form_state->setRedirect('entity.' . $this->entity->getEntityTypeId() . '.canonical', [
         $this->entity->getEntityTypeId() => $this->entity->id(),
       ]);

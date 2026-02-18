@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\paragraphs\Entity\Paragraph;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -70,7 +69,7 @@ class EntityCloneService {
     EntityFieldManagerInterface $entity_field_manager,
     AccountProxyInterface $current_user,
     LoggerInterface $logger,
-    LanguageManagerInterface $language_manager
+    LanguageManagerInterface $language_manager,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
@@ -118,19 +117,21 @@ class EntityCloneService {
 
     // Create new entity.
     $storage = $this->entityTypeManager->getStorage($target_entity_type);
-    
+
     $values = [];
-    
+
     // Set bundle field and language.
     if ($target_entity_type === 'node') {
       $values['type'] = $target_bundle;
-      $values['status'] = 0; // Unpublished.
+      // Unpublished.
+      $values['status'] = 0;
       $values['uid'] = $this->currentUser->id();
       $values['langcode'] = $base_language;
     }
     elseif ($target_entity_type === 'taxonomy_term') {
       $values['vid'] = $target_bundle;
-      $values['status'] = 0; // Unpublished.
+      // Unpublished.
+      $values['status'] = 0;
       $values['uid'] = $this->currentUser->id();
       $values['langcode'] = $base_language;
     }
@@ -175,24 +176,24 @@ class EntityCloneService {
    */
   protected function cloneTranslations(EntityInterface $source_entity, EntityInterface $target_entity, array $field_mappings, $base_language) {
     $translation_languages = $source_entity->getTranslationLanguages();
-    
+
     foreach ($translation_languages as $langcode => $language) {
       // Skip the base language as it's already cloned.
       if ($langcode === $base_language) {
         continue;
       }
-      
+
       try {
         // Get the source translation.
         $source_translation = $source_entity->getTranslation($langcode);
-        
+
         // Add translation to target entity.
         if (!$target_entity->hasTranslation($langcode)) {
           $target_translation = $target_entity->addTranslation($langcode);
-          
+
           // Map fields for this translation.
           $this->mapFieldsForLanguage($source_translation, $target_translation, $field_mappings, $langcode);
-          
+
           // Set translation metadata.
           if ($target_translation->hasField('content_translation_source')) {
             $target_translation->set('content_translation_source', $base_language);
@@ -201,11 +202,12 @@ class EntityCloneService {
             $target_translation->set('content_translation_outdated', FALSE);
           }
           if ($target_translation->hasField('content_translation_status')) {
-            $target_translation->set('content_translation_status', 0); // Unpublished.
+            // Unpublished.
+            $target_translation->set('content_translation_status', 0);
           }
-          
+
           $target_translation->save();
-          
+
           $this->logger->info('Cloned translation @language for entity @id', [
             '@language' => $langcode,
             '@id' => $target_entity->id(),
@@ -246,7 +248,7 @@ class EntityCloneService {
       }
 
       $source_field = $source_entity->get($source_field_name);
-      
+
       if ($source_field->isEmpty()) {
         continue;
       }
@@ -294,7 +296,7 @@ class EntityCloneService {
   protected function mapField(FieldItemListInterface $source_field, EntityInterface $target_entity, $target_field_name, $langcode = NULL) {
     $source_field_definition = $source_field->getFieldDefinition();
     $target_field_definition = $target_entity->get($target_field_name)->getFieldDefinition();
-    
+
     $source_type = $source_field_definition->getType();
     $target_type = $target_field_definition->getType();
 
@@ -319,11 +321,11 @@ class EntityCloneService {
       $values = [];
       foreach ($source_field as $delta => $item) {
         $item_value = $item->getValue();
-        
+
         // Extract value field.
         if (isset($item_value['value'])) {
           $values[$delta] = ['value' => $item_value['value']];
-          
+
           // Add format if target supports it.
           if (in_array($target_type, ['text', 'text_long', 'text_with_summary']) && isset($item_value['format'])) {
             $values[$delta]['format'] = $item_value['format'];
@@ -333,7 +335,7 @@ class EntityCloneService {
           $values[$delta] = ['value' => $item_value];
         }
       }
-      
+
       if (!empty($values)) {
         $target_entity->set($target_field_name, $values);
       }
@@ -370,10 +372,10 @@ class EntityCloneService {
   protected function mapEntityReferenceField(FieldItemListInterface $source_field, EntityInterface $target_entity, $target_field_name, $langcode = NULL) {
     $source_field_definition = $source_field->getFieldDefinition();
     $target_field_definition = $target_entity->get($target_field_name)->getFieldDefinition();
-    
+
     $source_settings = $source_field_definition->getSettings();
     $target_settings = $target_field_definition->getSettings();
-    
+
     $source_target_type = $source_settings['target_type'] ?? NULL;
     $target_target_type = $target_settings['target_type'] ?? NULL;
 
@@ -381,7 +383,7 @@ class EntityCloneService {
 
     foreach ($source_field as $delta => $item) {
       $referenced_entity = $item->entity;
-      
+
       if (!$referenced_entity) {
         continue;
       }
@@ -393,7 +395,7 @@ class EntityCloneService {
         if ($langcode && $referenced_entity->isTranslatable() && $referenced_entity->hasTranslation($langcode)) {
           $referenced_entity = $referenced_entity->getTranslation($langcode);
         }
-        
+
         $cloned_paragraph = $this->cloneParagraph($referenced_entity, $langcode);
         $values[$delta] = ['target_id' => $cloned_paragraph->id(), 'target_revision_id' => $cloned_paragraph->getRevisionId()];
       }
@@ -402,9 +404,9 @@ class EntityCloneService {
         // Check if vocabularies match or if target accepts any vocabulary.
         $source_bundles = $source_settings['handler_settings']['target_bundles'] ?? [];
         $target_bundles = $target_settings['handler_settings']['target_bundles'] ?? [];
-        
+
         $term_vid = $referenced_entity->bundle();
-        
+
         // If target accepts this vocabulary or accepts all vocabularies, add it.
         if (empty($target_bundles) || isset($target_bundles[$term_vid])) {
           $values[$delta] = ['target_id' => $referenced_entity->id()];
@@ -435,24 +437,24 @@ class EntityCloneService {
   protected function cloneParagraph($paragraph, $langcode = NULL) {
     // Create a duplicate of the paragraph.
     $duplicate = $paragraph->createDuplicate();
-    
+
     // Set language if specified.
     if ($langcode) {
       $duplicate->set('langcode', $langcode);
     }
-    
+
     // Handle nested paragraphs.
     foreach ($duplicate->getFields() as $field_name => $field) {
       $field_definition = $field->getFieldDefinition();
       $field_type = $field_definition->getType();
-      
+
       if ($field_type === 'entity_reference_revisions') {
         $settings = $field_definition->getSettings();
         $target_type = $settings['target_type'] ?? NULL;
-        
+
         if ($target_type === 'paragraph') {
           $cloned_values = [];
-          
+
           foreach ($field as $delta => $item) {
             $nested_paragraph = $item->entity;
             if ($nested_paragraph) {
@@ -460,7 +462,7 @@ class EntityCloneService {
               if ($langcode && $nested_paragraph->isTranslatable() && $nested_paragraph->hasTranslation($langcode)) {
                 $nested_paragraph = $nested_paragraph->getTranslation($langcode);
               }
-              
+
               $cloned_nested = $this->cloneParagraph($nested_paragraph, $langcode);
               $cloned_values[$delta] = [
                 'target_id' => $cloned_nested->id(),
@@ -468,16 +470,16 @@ class EntityCloneService {
               ];
             }
           }
-          
+
           if (!empty($cloned_values)) {
             $duplicate->set($field_name, $cloned_values);
           }
         }
       }
     }
-    
+
     $duplicate->save();
-    
+
     return $duplicate;
   }
 

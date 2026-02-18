@@ -88,7 +88,7 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
 
     for ($i = 0; $i < $num_mappings; $i++) {
       $mapping = $mappings[$i] ?? [];
-      
+
       $form['mappings'][$i] = [
         '#type' => 'details',
         '#title' => $this->t('Mapping @num', ['@num' => $i + 1]),
@@ -119,11 +119,11 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
       ];
 
       // Source bundle selection.
-      $source_entity_type = $form_state->getValue(['mappings', $i, 'source_entity_type']) 
+      $source_entity_type = $form_state->getValue(['mappings', $i, 'source_entity_type'])
         ?? $mapping['source_entity_type'] ?? 'node';
-      
+
       $source_bundles = $this->getBundleOptions($source_entity_type);
-      
+
       $form['mappings'][$i]['source_bundle'] = [
         '#type' => 'select',
         '#title' => $this->t('Source Bundle'),
@@ -155,11 +155,11 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
       ];
 
       // Target bundle selection.
-      $target_entity_type = $form_state->getValue(['mappings', $i, 'target_entity_type']) 
+      $target_entity_type = $form_state->getValue(['mappings', $i, 'target_entity_type'])
         ?? $mapping['target_entity_type'] ?? 'node';
-      
+
       $target_bundles = $this->getBundleOptions($target_entity_type);
-      
+
       $form['mappings'][$i]['target_bundle'] = [
         '#type' => 'select',
         '#title' => $this->t('Target Bundle'),
@@ -182,9 +182,9 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
       ];
 
       // Field mappings.
-      $source_bundle = $form_state->getValue(['mappings', $i, 'source_bundle']) 
+      $source_bundle = $form_state->getValue(['mappings', $i, 'source_bundle'])
         ?? $mapping['source_bundle'] ?? NULL;
-      $target_bundle = $form_state->getValue(['mappings', $i, 'target_bundle']) 
+      $target_bundle = $form_state->getValue(['mappings', $i, 'target_bundle'])
         ?? $mapping['target_bundle'] ?? NULL;
 
       if ($source_bundle && $target_bundle) {
@@ -196,7 +196,7 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
 
         $source_fields = $this->getFieldOptions($source_entity_type, $source_bundle);
         $target_fields = $this->getFieldOptions($target_entity_type, $target_bundle);
-        
+
         // Add "Do not map" option.
         $target_fields = ['' => $this->t('- Do not map -')] + $target_fields;
 
@@ -270,11 +270,11 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
   public function removeMapping(array &$form, FormStateInterface $form_state) {
     $triggering_element = $form_state->getTriggeringElement();
     $mapping_index = $triggering_element['#mapping_index'];
-    
+
     $mappings = $form_state->getValue('mappings');
     unset($mappings[$mapping_index]);
     $mappings = array_values($mappings);
-    
+
     $form_state->setValue('mappings', $mappings);
     $form_state->set('num_mappings', count($mappings));
     $form_state->setRebuild();
@@ -285,7 +285,7 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
    */
   protected function getBundleOptions($entity_type_id) {
     $options = [];
-    
+
     if ($entity_type_id === 'node') {
       $bundles = $this->entityTypeManager->getStorage('node_type')->loadMultiple();
       foreach ($bundles as $bundle) {
@@ -298,7 +298,7 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
         $options[$bundle->id()] = $bundle->label();
       }
     }
-    
+
     return $options;
   }
 
@@ -307,18 +307,18 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
    */
   protected function getFieldOptions($entity_type_id, $bundle) {
     $options = [];
-    
+
     $field_definitions = $this->entityFieldManager->getFieldDefinitions($entity_type_id, $bundle);
-    
+
     foreach ($field_definitions as $field_name => $field_definition) {
       // Skip base fields that shouldn't be mapped.
       if (in_array($field_name, ['uid', 'created', 'changed', 'uuid', 'revision_uid', 'revision_timestamp'])) {
         continue;
       }
-      
+
       $options[$field_name] = $field_definition->getLabel() . ' (' . $field_definition->getType() . ')';
     }
-    
+
     return $options;
   }
 
@@ -327,15 +327,15 @@ class EntityCloneMapperConfigForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $mappings = $form_state->getValue('mappings') ?? [];
-    
+
     // Clean up mappings - remove empty ones.
-    $mappings = array_filter($mappings, function($mapping) {
+    $mappings = array_filter($mappings, function ($mapping) {
       return !empty($mapping['source_bundle']) && !empty($mapping['target_bundle']);
     });
-    
+
     // Re-index array.
     $mappings = array_values($mappings);
-    
+
     $this->config('entity_clone_mapper.settings')
       ->set('mappings', $mappings)
       ->save();

@@ -7,6 +7,8 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Database\Database;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Form alter hooks for Itinerary Helper.
@@ -16,6 +18,7 @@ class ItineraryHooks {
 
   public function __construct(
     private readonly RouteMatchInterface $routeMatch,
+    private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -120,21 +123,79 @@ class ItineraryHooks {
   }
 
   /**
-  * Implements hook_form_FORM_ID_alter().
-  */
+   * Implements hook_form_FORM_ID_alter().
+   */
   #[Hook('form_bookable_calendar_opening_edit_form_alter')]
   #[Hook('form_bookable_calendar_opening_add_form_alter')]
   public function formBookingopeningAddFormAlter(
     array &$form,
     FormStateInterface $form_state,
   ) {
-    $form['#validate'][] = [$this, 'calenderOpeningValidate'];
+
+    $entity = $form_state->getFormObject()->getEntity();
+    // =========================
+    // ADD FORM
+    // =========================
+    if ($entity->isNew()) {
+
+      $type = \Drupal::request()->query->get('type');
+      if (!$type) {
+        throw new NotFoundHttpException();
+      }
+      $options = $form['bookable_calendar']['widget']['#options'] ?? [];
+      if (!array_key_exists($type, $options)) {
+        throw new NotFoundHttpException();
+      }
+      // Preselect value.
+      $form['bookable_calendar']['widget']['#default_value'] = $type;
+    }
+    else {
+      // Edit form.
+      $type = $entity->get('bookable_calendar')->target_id;
+    }
+
+    // =========================
+    // LOAD CALENDAR ENTITY
+    // =========================
+    $calendar = $this->entityTypeManager->getStorage('bookable_calendar')->load($type);
+    $label = $calendar ? strtolower($calendar->label()) : '';
+    switch (TRUE) {
+      // HOTEL.
+      case str_contains($label, 'hotel'):
+        // Show hotel fields.
+        // $this->hideHotelFields($form);
+        // Add hotel validation.
+        $form['#validate'][] = [$this, 'hotelOpeningValidate'];
+        break;
+
+      // BUS.
+      case str_contains($label, 'bus'):
+        $this->hideHotelFields($form);
+        break;
+
+      // FLIGHT.
+      case str_contains($label, 'flight'):
+        $this->hideHotelFields($form);
+        break;
+
+    }
+
+    $form['bookable_calendar']['widget']['#disabled'] = TRUE;
+  }
+
+  /**
+   * Hide Hotel Fields.
+   */
+  private function hideHotelFields(array &$form): void {
+    $form['field_2_single_bed_s']['#access'] = FALSE;
+    $form['field_king_bed']['#access'] = FALSE;
+    $form['field_queen_bed']['#access'] = FALSE;
   }
 
   /**
    * Validate Callback.
    */
-  public function calenderOpeningValidate(array &$form, FormStateInterface $form_state) {
+  public function hotelOpeningValidate(array &$form, FormStateInterface $form_state) {
     $formValues = $form_state->getValues();
     $total_slots = (int) $formValues['slots'][0]['value'];
     $roomCount = (int) ($formValues['field_2_single_bed_s'][0]['value'] + $formValues['field_king_bed'][0]['value'] + $formValues['field_queen_bed'][0]['value']);
@@ -166,16 +227,12 @@ class ItineraryHooks {
       // for this opening instance + room type.
       $connection = Database::getConnection();
       $query = $connection->select('booking_contact__field_room_type', 'rt');
-
       // Join booking_contact.
       $query->join('booking_contact', 'bc', 'bc.id = rt.entity_id');
-
       // Join booking_contact__booking.
       $query->join('booking_contact__booking', 'bcb', 'bcb.entity_id = bc.id');
-
       // Join booking entity.
       $query->join('booking', 'b', 'b.id = bcb.booking_target_id');
-
       $query->condition('rt.deleted', 0);
       $query->condition('bcb.deleted', 0);
       $query->condition('rt.field_room_type_value', $room_type);
@@ -189,6 +246,20 @@ class ItineraryHooks {
           'field_room_type',
           $this->t('Selected room type is fully booked for this date.')
         );
+      }
+    }
+  }
+
+  /**
+   * Implements hook_menu_local_actions_alter().
+   */
+  #[Hook('menu_local_actions_alter')]
+  public function menuLocalActionsAlter(array &$actions) {
+    foreach ($actions as $key => $action) {
+      // Target Bookable Calendar Opening add button.
+      if ($action['route_name'] === 'entity.bookable_calendar_opening.add_form') {
+        // Remove the button from (admin/content/bookable-calendar/bookable-calendar-opening)
+        unset($actions[$key]);
       }
     }
   }
