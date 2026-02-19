@@ -105,8 +105,20 @@ class ItineraryHooks {
     array &$form,
     FormStateInterface $form_state,
   ) {
+    $instance = $this->routeMatch->getParameter('opening_instance');
+    $opening = $instance->get('booking_opening')->entity;
+    $calendar = $opening->get('bookable_calendar')->entity;
+    $label = strtolower($calendar->label());
+    if (str_contains($label, 'hotel')) {
+      $form['#validate'][] = [$this, 'roomCapacityValidate'];
+    }
+    else {
+      // Hide room type for non-hotel.
+      $form['field_room_type']['#access'] = FALSE;
+    }
+
+    // Only hotel should have room type logic.
     $form['actions']['submit']['#submit'][] = [$this, 'bookingRedirectSubmit'];
-    $form['#validate'][] = [$this, 'roomCapacityValidate'];
   }
 
   /**
@@ -165,17 +177,21 @@ class ItineraryHooks {
         // Show hotel fields.
         // $this->hideHotelFields($form);
         // Add hotel validation.
-        $form['#validate'][] = [$this, 'hotelOpeningValidate'];
+        $form['#validate'][] = [self::class, 'hotelOpeningValidate'];
         break;
 
       // BUS.
       case str_contains($label, 'bus'):
-        $this->hideHotelFields($form);
+        self::hideHotelFields($form);
         break;
 
       // FLIGHT.
       case str_contains($label, 'flight'):
-        $this->hideHotelFields($form);
+        self::hideHotelFields($form);
+        break;
+
+      default:
+        self::hideHotelFields($form);
         break;
 
     }
@@ -186,7 +202,7 @@ class ItineraryHooks {
   /**
    * Hide Hotel Fields.
    */
-  private function hideHotelFields(array &$form): void {
+  private static function hideHotelFields(array &$form): void {
     $form['field_2_single_bed_s']['#access'] = FALSE;
     $form['field_king_bed']['#access'] = FALSE;
     $form['field_queen_bed']['#access'] = FALSE;
@@ -195,14 +211,14 @@ class ItineraryHooks {
   /**
    * Validate Callback.
    */
-  public function hotelOpeningValidate(array &$form, FormStateInterface $form_state) {
+  public static function hotelOpeningValidate(array &$form, FormStateInterface $form_state) {
     $formValues = $form_state->getValues();
     $total_slots = (int) $formValues['slots'][0]['value'];
     $roomCount = (int) ($formValues['field_2_single_bed_s'][0]['value'] + $formValues['field_king_bed'][0]['value'] + $formValues['field_queen_bed'][0]['value']);
     if ($roomCount !== $total_slots) {
       $form_state->setErrorByName(
         'slots',
-        $this->t('Total rooms (%rooms) must equal total slots (%slots).', [
+        t('Total rooms (%rooms) must equal total slots (%slots).', [
           '%rooms' => $roomCount,
           '%slots' => $total_slots,
         ])
@@ -214,9 +230,12 @@ class ItineraryHooks {
    * Room Capacity Validator.
    */
   public function roomCapacityValidate(array &$form, FormStateInterface $form_state) {
-    $room_type = $form_state->getValue('field_room_type')[0]['value'];
-    if ($room_type === '_none') {
-      return;
+    $room_type = $form_state->getValue('field_room_type')[0]['value'] ?? NULL;
+    if ($room_type === '_none' || empty($room_type)) {
+      $form_state->setErrorByName(
+          'field_room_type',
+          $this->t('Select Room type.')
+        );
     }
     if ($room_type) {
       /** @var \Drupal\bookable_calendar\Entity\BookableCalendarOpeningInstance $instance */
