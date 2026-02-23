@@ -1,0 +1,179 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for J Navi Entity Clone module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_entity_operation().
+ */
+function j_navi_entity_clone_entity_operation(EntityInterface $entity) {
+  $operations = [];
+  
+  // Only add clone operation for nodes and taxonomy terms.
+  if (!in_array($entity->getEntityTypeId(), ['node', 'taxonomy_term'])) {
+    return $operations;
+  }
+  
+  // Check if user has permission.
+  if (!\Drupal::currentUser()->hasPermission('clone entities')) {
+    return $operations;
+  }
+  
+  // Check if there are any mappings configured for this entity.
+  $config = \Drupal::config('j_navi_entity_clone.settings');
+  $mappings = $config->get('mappings') ?? [];
+  
+  $entity_type_id = $entity->getEntityTypeId();
+  $bundle = $entity->bundle();
+  $target_labels = [];
+  
+  foreach ($mappings as $mapping) {
+    if ($mapping['enabled'] &&
+        $mapping['source_entity_type'] === $entity_type_id && 
+        $mapping['source_bundle'] === $bundle) {
+      // Get target bundle label.
+      $target_entity_type = $mapping['target_entity_type'];
+      $target_bundle = $mapping['target_bundle'];
+      
+      try {
+        if ($target_entity_type === 'node') {
+          $node_type = \Drupal::entityTypeManager()
+            ->getStorage('node_type')
+            ->load($target_bundle);
+          if ($node_type) {
+            $target_labels[] = $node_type->label();
+          }
+        }
+        elseif ($target_entity_type === 'taxonomy_term') {
+          $vocabulary = \Drupal::entityTypeManager()
+            ->getStorage('taxonomy_vocabulary')
+            ->load($target_bundle);
+          if ($vocabulary) {
+            $target_labels[] = $vocabulary->label();
+          }
+        }
+      }
+      catch (\Exception $e) {
+        // Continue if entity type can't be loaded.
+      }
+    }
+  }
+  
+  if (!empty($target_labels)) {
+    // Create button text based on number of target types.
+    if (count($target_labels) === 1) {
+      $button_text = t('Clone to @type', ['@type' => reset($target_labels)]);
+    }
+    else {
+      $button_text = t('Clone to @types', ['@types' => implode('/', array_slice($target_labels, 0, 2))]);
+      if (count($target_labels) > 2) {
+        $button_text = t('Clone to @count types', ['@count' => count($target_labels)]);
+      }
+    }
+    
+    $operations['clone'] = [
+      'title' => $button_text,
+      'weight' => 50,
+      'url' => Url::fromRoute('j_navi_entity_clone.clone_entity', [
+        'entity_type' => $entity->getEntityTypeId(),
+        'entity' => $entity->id(),
+      ]),
+    ];
+  }
+  
+  return $operations;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function j_navi_entity_clone_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Add clone button to node edit forms.
+  if (preg_match('/^node_\w+_edit_form$/', $form_id) || 
+      preg_match('/^taxonomy_term_\w+_form$/', $form_id)) {
+    
+    $entity = $form_state->getFormObject()->getEntity();
+    
+    // Only show on existing entities.
+    if ($entity->isNew()) {
+      return;
+    }
+    
+    // Check if user has permission.
+    if (!\Drupal::currentUser()->hasPermission('clone entities')) {
+      return;
+    }
+    
+    // Check if there are any mappings configured for this entity.
+    $config = \Drupal::config('j_navi_entity_clone.settings');
+    $mappings = $config->get('mappings') ?? [];
+    
+    $entity_type_id = $entity->getEntityTypeId();
+    $bundle = $entity->bundle();
+    $target_labels = [];
+    
+    foreach ($mappings as $mapping) {
+      if ($mapping['enabled'] &&
+          $mapping['source_entity_type'] === $entity_type_id && 
+          $mapping['source_bundle'] === $bundle) {
+        // Get target bundle label.
+        $target_entity_type = $mapping['target_entity_type'];
+        $target_bundle = $mapping['target_bundle'];
+        
+        try {
+          if ($target_entity_type === 'node') {
+            $node_type = \Drupal::entityTypeManager()
+              ->getStorage('node_type')
+              ->load($target_bundle);
+            if ($node_type) {
+              $target_labels[] = $node_type->label();
+            }
+          }
+          elseif ($target_entity_type === 'taxonomy_term') {
+            $vocabulary = \Drupal::entityTypeManager()
+              ->getStorage('taxonomy_vocabulary')
+              ->load($target_bundle);
+            if ($vocabulary) {
+              $target_labels[] = $vocabulary->label();
+            }
+          }
+        }
+        catch (\Exception $e) {
+          // Continue if entity type can't be loaded.
+        }
+      }
+    }
+    
+    if (!empty($target_labels)) {
+      // Create button text based on number of target types.
+      if (count($target_labels) === 1) {
+        $button_text = t('Clone to @type', ['@type' => reset($target_labels)]);
+      }
+      else {
+        $button_text = t('Clone to @types', ['@types' => implode('/', array_slice($target_labels, 0, 2))]);
+        if (count($target_labels) > 2) {
+          $button_text = t('Clone to @count types', ['@count' => count($target_labels)]);
+        }
+      }
+      
+      $form['actions']['clone'] = [
+        '#type' => 'link',
+        '#title' => $button_text,
+        '#url' => Url::fromRoute('j_navi_entity_clone.clone_entity', [
+          'entity_type' => $entity_type_id,
+          'entity' => $entity->id(),
+        ]),
+        '#attributes' => [
+          'class' => ['button', 'button--primary'],
+        ],
+        '#weight' => 10,
+      ];
+    }
+  }
+}

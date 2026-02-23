@@ -1,0 +1,6 @@
+j_navi_entity_clone.admin:
+  title: 'J Navi Entity Clone'
+  route_name: j_navi_entity_clone.settings
+  description: 'Configure entity cloning mappings'
+  parent: system.admin_config_content
+  weight: 10

@@ -1,0 +1,13 @@
+services:
+  j_navi_entity_clone.clone_service:
+    class: Drupal\j_navi_entity_clone\Service\EntityCloneService
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_field.manager'
+      - '@current_user'
+      - '@logger.channel.j_navi_entity_clone'
+      - '@language_manager'
+
+  logger.channel.j_navi_entity_clone:
+    parent: logger.channel_base
+    arguments: ['j_navi_entity_clone']

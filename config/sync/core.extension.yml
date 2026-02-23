@@ -20,7 +20,6 @@ module:
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
-  entity_clone_mapper: 0
   entity_redirect: 0
   entity_reference_revisions: 0
   eva: 0
@@ -35,7 +34,8 @@ module:
   image: 0
   inline_entity_form: 0
   inline_form_errors: 0
-  itinerary_helper: 0
+  j_navi_entity_clone: 0
+  j_navi_itinerary_helper: 0
   language: 0
   link: 0
   locale: 0

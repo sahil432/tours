@@ -1,0 +1,20 @@
+j_navi_entity_clone.settings:
+  path: '/admin/config/content/j-navi-entity-clone'
+  defaults:
+    _form: '\Drupal\j_navi_entity_clone\Form\JNaviEntityCloneConfigForm'
+    _title: 'J Navi Entity Clone Configuration'
+  requirements:
+    _permission: 'administer j navi entity clone'
+
+j_navi_entity_clone.clone_entity:
+  path: '/j-navi-entity-clone/clone/{entity_type}/{entity}'
+  defaults:
+    _controller: '\Drupal\j_navi_entity_clone\Controller\EntityCloneController::cloneEntity'
+    _title: 'Clone Entity'
+  requirements:
+    _permission: 'clone entities'
+    _entity_access: 'entity.update'
+  options:
+    parameters:
+      entity:
+        type: entity:{entity_type}
