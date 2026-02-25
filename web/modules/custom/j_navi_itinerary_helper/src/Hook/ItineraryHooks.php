@@ -103,10 +103,7 @@ class ItineraryHooks {
    * Implements hook_form_FORM_ID_alter().
    */
   #[Hook('form_booking_contact_add_form_alter')]
-  public function formBookingContactAddFormAlter(
-    array &$form,
-    FormStateInterface $form_state,
-  ) {
+  public function formBookingContactAddFormAlter(array &$form, FormStateInterface $form_state) {
     $instance = $this->routeMatch->getParameter('opening_instance');
     $opening = $instance->get('booking_opening')->entity;
     $calendar = $opening->get('bookable_calendar')->entity;
@@ -295,8 +292,8 @@ class ItineraryHooks {
   }
 
   /**
- *
- */
+   * Booking Add form Alter.
+   */
   #[Hook('form_booking_add_form_alter')]
   public function bookingAddFormAlter(array &$form, FormStateInterface $form_state): void {
 
@@ -341,6 +338,20 @@ class ItineraryHooks {
         $form['booking_date']['widget'][0]['end_value']['#default_value'] = DrupalDateTime::createFromTimestamp((int) $end_timestamp);
         $form['booking_date']['widget']['#disabled'] = TRUE;
       }
+    }
+    $form['actions']['submit']['#submit'][] = [$this, 'bookingAddSubmit'];
+  }
+
+  /**
+   * Submit handler to redirect back to opening after booking.
+   */
+  public function bookingAddSubmit(array &$form, FormStateInterface $form_state): void {
+    $calender = \Drupal::request()->query->get('bookable_calendar_opening');
+    if ($calender) {
+      $form_state->setRedirect(
+        'entity.bookable_calendar_opening.canonical',
+        ['bookable_calendar_opening' => $calender]
+      );
     }
   }
 
