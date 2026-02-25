@@ -27,6 +27,7 @@
       <th>Date</th>
       <th>Tour Start</th>
       <th>Status</th>
+      <th>Slots</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -56,6 +57,21 @@
       <td>
         {% if content.status['#items'].value == 1 %}
           {{ content.booking_instance }}
+        {% else %}
+          <em>—</em>
+        {% endif %}
+      </td>
+      <td>
+        {% if content.status['#items'].value == 1 %}
+          {% if slots_available > 0 %}
+            <a href="{{ path('entity.booking.add_form') ~ '?bookable_calendar_opening=' ~ content['#bookable_calendar_opening'].id() }}"
+              class="button button--primary">
+              Book Now
+            </a>
+          {% else %}
+            <em>No Slots Available</em>
+          {% endif %}
+
         {% else %}
           <em>—</em>
         {% endif %}

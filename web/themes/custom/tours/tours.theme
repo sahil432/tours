@@ -1,6 +1,18 @@
 <?php
 
+use Drupal\bookable_calendar\Entity\BookableCalendarOpeningInstance;
+
+
 /**
- * @file
- * Tours theme hooks and preprocess functions.
+ * Implements hook_preprocess_bookable_calendar_opening().
  */
+function tours_preprocess_bookable_calendar_opening(&$variables) {
+
+  if (!empty($variables['content']['booking_instance'][0]['#bookable_calendar_opening_inst'])) {
+
+    /** @var BookableCalendarOpeningInstance $instance */
+    $instance = $variables['content']['booking_instance'][0]['#bookable_calendar_opening_inst'];
+    $variables['slots_available'] = $instance->slotsAvailable();
+    $variables['opening_id'] = $instance->get('booking_opening')->target_id;
+  }
+}

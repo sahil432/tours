@@ -61,7 +61,7 @@ class CloneSelectionForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, EntityInterface $entity = NULL, array $mappings = []) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?EntityInterface $entity = NULL, array $mappings = []) {
     $this->entity = $entity;
     $this->mappings = $mappings;
 
@@ -71,10 +71,10 @@ class CloneSelectionForm extends FormBase {
 
     $options = [];
     foreach ($mappings as $index => $mapping) {
-      $target_label = $mapping['target_entity_type'] === 'node' 
-        ? $this->t('Content') 
+      $target_label = $mapping['target_entity_type'] === 'node'
+        ? $this->t('Content')
         : $this->t('Taxonomy Term');
-      
+
       $options[$index] = $this->t('@type: @bundle', [
         '@type' => $target_label,
         '@bundle' => $mapping['target_bundle'],
@@ -119,11 +119,11 @@ class CloneSelectionForm extends FormBase {
 
     try {
       $cloned_entity = $this->cloneService->cloneEntity($this->entity, $mapping);
-      
+
       $this->messenger()->addStatus($this->t('Entity cloned successfully. The new @type has been created in unpublished state.', [
         '@type' => $cloned_entity->getEntityType()->getLabel(),
       ]));
-      
+
       // Redirect to the new entity's edit form.
       $form_state->setRedirect('entity.' . $cloned_entity->getEntityTypeId() . '.edit_form', [
         $cloned_entity->getEntityTypeId() => $cloned_entity->id(),
@@ -133,7 +133,7 @@ class CloneSelectionForm extends FormBase {
       $this->messenger()->addError($this->t('Error cloning entity: @message', [
         '@message' => $e->getMessage(),
       ]));
-      
+
       $form_state->setRedirect('entity.' . $this->entity->getEntityTypeId() . '.canonical', [
         $this->entity->getEntityTypeId() => $this->entity->id(),
       ]);

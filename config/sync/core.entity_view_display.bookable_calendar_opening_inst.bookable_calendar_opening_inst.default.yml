@@ -14,13 +14,9 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  book_link:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
 hidden:
   available_slots: true
+  book_link: true
   booking: true
   booking_opening: true
   date: true

@@ -9,6 +9,8 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Database\Database;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Form alter hooks for Itinerary Helper.
@@ -197,6 +199,15 @@ class ItineraryHooks {
     }
 
     $form['bookable_calendar']['widget']['#disabled'] = TRUE;
+    $form['actions']['submit']['#submit'][] = [self::class, 'calenderOpening'];
+  }
+
+  /**
+   * Submit handler to redirect back to opening after booking.
+   */
+  public static function calenderOpening(array &$form, FormStateInterface $form_state): void {
+    // Invalidate calendar opening instance view cache.
+    Cache::invalidateTags(['bookable_calendar_opening_inst_view']);
   }
 
   /**
@@ -279,6 +290,56 @@ class ItineraryHooks {
       if ($action['route_name'] === 'entity.bookable_calendar_opening.add_form') {
         // Remove the button from (admin/content/bookable-calendar/bookable-calendar-opening)
         unset($actions[$key]);
+      }
+    }
+  }
+
+  /**
+ *
+ */
+  #[Hook('form_booking_add_form_alter')]
+  public function bookingAddFormAlter(array &$form, FormStateInterface $form_state): void {
+
+    $opening_id = \Drupal::request()->query->get('bookable_calendar_opening');
+
+    if (empty($opening_id)) {
+      return;
+    }
+
+    /** @var \Drupal\bookable_calendar\Entity\BookableCalendarOpening $opening */
+    $opening = $this->entityTypeManager->getStorage('bookable_calendar_opening')->load($opening_id);
+    if (!$opening) {
+      return;
+    }
+    $instanceStorage = \Drupal::entityTypeManager()->getStorage('bookable_calendar_opening_inst');
+    $instances = $instanceStorage->loadByProperties([
+      'booking_opening' => $opening->id(),
+    ]);
+
+    if (!empty($instances)) {
+      $instance = reset($instances);
+      $form['booking_instance']['widget'][0]['target_id']['#default_value'] = $instance;
+      $form['booking_instance']['widget']['#disabled'] = TRUE;
+    }
+    /*
+     * Prefill Booking Calendar
+     */
+    if (!$opening->get('bookable_calendar')->isEmpty()) {
+      $calendar = $opening->get('bookable_calendar')->entity;
+      $form['booking_calendar']['widget'][0]['target_id']['#default_value'] = $calendar;
+      $form['booking_calendar']['widget']['#disabled'] = TRUE;
+    }
+    /*
+     * Prefill Booking Date
+     */
+    if ($opening && $opening->hasField('date') && !$opening->get('date')->isEmpty()) {
+      $start_timestamp = $opening->get('date')->value ?? NULL;
+      $end_timestamp   = $opening->get('date')->end_value ?? NULL;
+      // Set only if BOTH start and end exist and are numeric.
+      if (is_numeric($start_timestamp) && is_numeric($end_timestamp)) {
+        $form['booking_date']['widget'][0]['value']['#default_value'] = DrupalDateTime::createFromTimestamp((int) $start_timestamp);
+        $form['booking_date']['widget'][0]['end_value']['#default_value'] = DrupalDateTime::createFromTimestamp((int) $end_timestamp);
+        $form['booking_date']['widget']['#disabled'] = TRUE;
       }
     }
   }
