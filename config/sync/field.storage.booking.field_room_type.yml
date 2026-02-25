@@ -1,0 +1,30 @@
+uuid: 93275183-22eb-4e07-afc7-458c78e48a1f
+langcode: en
+status: true
+dependencies:
+  module:
+    - bookable_calendar
+    - options
+id: booking.field_room_type
+field_name: field_room_type
+entity_type: booking
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: field_2_single_bed_s
+      label: '2 Single Bed(s)'
+    -
+      value: field_king_bed
+      label: 'King Bed'
+    -
+      value: field_queen_bed
+      label: 'Queen Bed'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

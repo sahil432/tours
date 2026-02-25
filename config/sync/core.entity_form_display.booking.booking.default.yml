@@ -2,6 +2,8 @@ uuid: 1cc62e8d-32a4-4de8-944d-9a29379f370c
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.field.booking.booking.field_room_type
   module:
     - bookable_calendar
     - smart_date
@@ -51,6 +53,12 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_room_type:
+    type: options_select
     weight: 3
     region: content
     settings: {  }

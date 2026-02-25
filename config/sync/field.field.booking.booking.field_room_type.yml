@@ -1,0 +1,21 @@
+uuid: 1abc5b39-6f54-4911-95f2-ae9a05b78f92
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.booking.field_room_type
+  module:
+    - bookable_calendar
+    - options
+id: booking.booking.field_room_type
+field_name: field_room_type
+entity_type: booking
+bundle: booking
+label: 'Room Type'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

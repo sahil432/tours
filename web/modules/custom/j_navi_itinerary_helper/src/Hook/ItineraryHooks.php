@@ -38,7 +38,6 @@ class ItineraryHooks {
    */
   #[Hook('form_alter')]
   public function itineraryHelperFormAlter(array &$form, FormStateInterface $form_state, string $form_id) : void {
-    // dd($form_id);
     $route_name = $this->routeMatch->getRouteName();
     // Disable widgets on both routes.
     if (in_array($route_name, [
@@ -94,7 +93,7 @@ class ItineraryHooks {
 
     foreach ($remove as $plugin_id) {
       if (isset($local_tasks['tabs'][1][$plugin_id])) {
-        unset($local_tasks['tabs'][1][$plugin_id]);
+        // unset($local_tasks['tabs'][1][$plugin_id]);.
       }
     }
   }
@@ -308,6 +307,16 @@ class ItineraryHooks {
     if (!$opening) {
       return;
     }
+    $calendar = $opening->get('bookable_calendar')->entity;
+    $label = strtolower($calendar->label());
+    if (str_contains($label, 'hotel')) {
+      $form['#validate'][] = [$this, 'roomCapacityBookAddValidate'];
+    }
+    else {
+      // Hide room type for non-hotel.
+      $form['field_room_type']['#access'] = FALSE;
+    }
+
     $instanceStorage = \Drupal::entityTypeManager()->getStorage('bookable_calendar_opening_inst');
     $instances = $instanceStorage->loadByProperties([
       'booking_opening' => $opening->id(),
@@ -322,7 +331,6 @@ class ItineraryHooks {
      * Prefill Booking Calendar
      */
     if (!$opening->get('bookable_calendar')->isEmpty()) {
-      $calendar = $opening->get('bookable_calendar')->entity;
       $form['booking_calendar']['widget'][0]['target_id']['#default_value'] = $calendar;
       $form['booking_calendar']['widget']['#disabled'] = TRUE;
     }
@@ -352,6 +360,54 @@ class ItineraryHooks {
         'entity.bookable_calendar_opening.canonical',
         ['bookable_calendar_opening' => $calender]
       );
+    }
+  }
+
+  /**
+   * Booking Edit form Alter.
+   */
+  #[Hook('form_booking_edit_form_alter')]
+  public function bookingEditFormAlter(array &$form, FormStateInterface $form_state): void {
+    $form['booking_date']['widget']['#disabled'] = TRUE;
+    $form['booking_calendar']['widget']['#disabled'] = TRUE;
+    $form['booking_instance']['widget']['#disabled'] = TRUE;
+  }
+
+  /**
+   * Room Capacity Validator.
+   */
+  public function roomCapacityBookAddValidate(array &$form, FormStateInterface $form_state) {
+    $room_type = $form_state->getValue('field_room_type')[0]['value'] ?? NULL;
+    if ($room_type === '_none' || empty($room_type)) {
+      $form_state->setErrorByName(
+          'field_room_type',
+          $this->t('Select Room type.')
+        );
+    }
+    if ($room_type) {
+      $opening_id = \Drupal::request()->query->get('bookable_calendar_opening');
+      $opening = $this->entityTypeManager->getStorage('bookable_calendar_opening')->load($opening_id);
+      $capacity = (int) $opening->get($room_type)->value;
+      // Count how many bookings already exist
+      // for this opening instance + room type.
+      $connection = Database::getConnection();
+      $query = $connection->select('booking__field_room_type', 'rt');
+      // Join booking_contact.
+      $query->join('booking', 'bc', 'bc.id = rt.entity_id');
+      // Join booking_contact__booking.
+      $query->join('bookable_calendar_opening_inst', 'bco', 'bco.id = bc.booking_instance');
+      // Join booking entity.
+      $query->condition('rt.deleted', 0);
+      $query->condition('rt.field_room_type_value', $room_type);
+      // THIS is the real opening instance filter.
+      $query->condition('bco.booking_opening', $opening_id);
+      $count = (int) $query->countQuery()->execute()->fetchField();
+      if ($count >= $capacity) {
+        $form_state->setErrorByName(
+          'field_room_type',
+          $this->t('Selected room type is fully booked for this date.')
+        );
+      }
     }
   }
 
