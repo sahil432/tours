@@ -93,7 +93,7 @@ class ItineraryHooks {
 
     foreach ($remove as $plugin_id) {
       if (isset($local_tasks['tabs'][1][$plugin_id])) {
-        // unset($local_tasks['tabs'][1][$plugin_id]);.
+        unset($local_tasks['tabs'][1][$plugin_id]);
       }
     }
   }
@@ -284,7 +284,8 @@ class ItineraryHooks {
     foreach ($actions as $key => $action) {
       // Target Bookable Calendar Opening add button.
       if ($action['route_name'] === 'entity.bookable_calendar_opening.add_form') {
-        // Remove the button from (admin/content/bookable-calendar/bookable-calendar-opening)
+        // Remove the button
+        // (admin/content/bookable-calendar/bookable-calendar-opening)
         unset($actions[$key]);
       }
     }
