@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.booking_contact.field_room_type
+    - field.storage.booking.field_room_type
   module:
     - bookable_calendar
     - options
@@ -1875,11 +1875,11 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_room_type:
-          id: field_room_type
-          table: booking_contact__field_room_type
+        field_room_type_1:
+          id: field_room_type_1
+          table: booking__field_room_type
           field: field_room_type
-          relationship: contact
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -2081,4 +2081,4 @@ display:
         - url.query_args
         - user.permissions
       tags:
-        - 'config:field.storage.booking_contact.field_room_type'
+        - 'config:field.storage.booking.field_room_type'
