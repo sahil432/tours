@@ -9,6 +9,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Database\Database;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Cache\Cache;
 
@@ -372,6 +373,25 @@ class ItineraryHooks {
     $form['booking_date']['widget']['#disabled'] = TRUE;
     $form['booking_calendar']['widget']['#disabled'] = TRUE;
     $form['booking_instance']['widget']['#disabled'] = TRUE;
+    $opening_id = \Drupal::request()->query->get('bookable_calendar_opening');
+    if (empty($opening_id)) {
+      return;
+    }
+
+    /** @var \Drupal\bookable_calendar\Entity\BookableCalendarOpening $opening */
+    $opening = $this->entityTypeManager->getStorage('bookable_calendar_opening')->load($opening_id);
+    if (!$opening) {
+      return;
+    }
+    $calendar = $opening->get('bookable_calendar')->entity;
+    $label = strtolower($calendar->label());
+    if (str_contains($label, 'hotel')) {
+      $form['#validate'][] = [$this, 'roomCapacityBookAddValidate'];
+    }
+    else {
+      // Hide room type for non-hotel.
+      $form['field_room_type']['#access'] = FALSE;
+    }
   }
 
   /**
@@ -384,30 +404,73 @@ class ItineraryHooks {
           'field_room_type',
           $this->t('Select Room type.')
         );
+      return;
     }
-    if ($room_type) {
-      $opening_id = \Drupal::request()->query->get('bookable_calendar_opening');
-      $opening = $this->entityTypeManager->getStorage('bookable_calendar_opening')->load($opening_id);
-      $capacity = (int) $opening->get($room_type)->value;
-      // Count how many bookings already exist
-      // for this opening instance + room type.
-      $connection = Database::getConnection();
-      $query = $connection->select('booking__field_room_type', 'rt');
-      // Join booking_contact.
-      $query->join('booking', 'bc', 'bc.id = rt.entity_id');
-      // Join booking_contact__booking.
-      $query->join('bookable_calendar_opening_inst', 'bco', 'bco.id = bc.booking_instance');
-      // Join booking entity.
-      $query->condition('rt.deleted', 0);
-      $query->condition('rt.field_room_type_value', $room_type);
-      // THIS is the real opening instance filter.
-      $query->condition('bco.booking_opening', $opening_id);
-      $count = (int) $query->countQuery()->execute()->fetchField();
-      if ($count >= $capacity) {
-        $form_state->setErrorByName(
-          'field_room_type',
-          $this->t('Selected room type is fully booked for this date.')
-        );
+
+    $opening_id = \Drupal::request()->query->get('bookable_calendar_opening');
+    $opening = $this->entityTypeManager->getStorage('bookable_calendar_opening')->load($opening_id);
+    if (!$opening) {
+      return;
+    }
+
+    $capacity = (int) $opening->get($room_type)->value;
+
+    // Get the booking entity (if editing).
+    $booking = $form_state->getFormObject()->getEntity();
+    $is_new = $booking->isNew();
+
+    // If editing, check if room type actually changed.
+    if (!$is_new) {
+      $original_room_type = $booking->get('field_room_type')->value ?? NULL;
+      // If room type hasn't changed, no need to validate capacity.
+      if ($original_room_type === $room_type) {
+        return;
+      }
+    }
+
+    // Count how many bookings already exist for this opening + room type.
+    $connection = Database::getConnection();
+    $query = $connection->select('booking__field_room_type', 'rt');
+    $query->join('booking', 'b', 'b.id = rt.entity_id');
+    $query->join('bookable_calendar_opening_inst', 'boi', 'boi.id = b.booking_instance');
+    $query->condition('rt.deleted', 0);
+    $query->condition('rt.field_room_type_value', $room_type);
+    $query->condition('boi.booking_opening', $opening_id);
+
+    // If editing, exclude current booking from count.
+    if (!$is_new) {
+      $query->condition('b.id', $booking->id(), '<>');
+    }
+
+    $count = (int) $query->countQuery()->execute()->fetchField();
+
+    if ($count >= $capacity) {
+      $form_state->setErrorByName(
+        'field_room_type',
+        $this->t('Selected room type is fully booked for this date.')
+      );
+    }
+  }
+
+  /**
+   * Implements hook_entity_operation_alter().
+   */
+  #[Hook('entity_operation_alter')]
+  public function entityOperationAlter(array &$operations, EntityInterface $entity): void {
+    // Add bookable_calendar_opening query parameter to booking operations.
+    if ($entity->getEntityTypeId() === 'booking') {
+      $booking_instance = $entity->get('booking_instance')->entity;
+      if ($booking_instance) {
+        $opening_id = $booking_instance->get('booking_opening')->target_id;
+        if ($opening_id) {
+          foreach ($operations as &$operation) {
+            if (isset($operation['url'])) {
+              $operation['url']->setOption('query', [
+                'bookable_calendar_opening' => $opening_id,
+              ]);
+            }
+          }
+        }
       }
     }
   }
