@@ -1,0 +1,21 @@
+uuid: 9fc9910b-80eb-464d-8972-24a19a0d95f1
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_persons
+id: jnavi_person.field_firstname
+field_name: field_firstname
+entity_type: jnavi_person
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,11 @@
+jnavi_person.type_add:
+  title: 'Add person type'
+  route_name: entity.jnavi_person_type.add_form
+  appears_on:
+    - entity.jnavi_person_type.collection
+
+jnavi_person.add_page:
+  title: 'Add person'
+  route_name: entity.jnavi_person.add_page
+  appears_on:
+    - entity.jnavi_person.collection

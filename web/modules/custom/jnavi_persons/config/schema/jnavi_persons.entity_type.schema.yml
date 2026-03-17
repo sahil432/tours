@@ -1,0 +1,12 @@
+jnavi_persons.jnavi_person_type.*:
+  type: config_entity
+  label: 'Person type config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

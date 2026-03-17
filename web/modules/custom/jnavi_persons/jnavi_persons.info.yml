@@ -1,0 +1,5 @@
+name: 'Jnavi Persons'
+type: module
+description: 'Persons features and customisations.'
+package: Jnavi
+core_version_requirement: ^11

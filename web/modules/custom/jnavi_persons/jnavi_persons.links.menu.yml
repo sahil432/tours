@@ -1,0 +1,11 @@
+entity.jnavi_person_type.collection:
+  title: 'Person types'
+  description: 'Manage and CRUD actions on Person type.'
+  parent: system.admin_structure
+  route_name: entity.jnavi_person_type.collection
+
+entity.jnavi_person.collection:
+  title: 'Persons'
+  description: 'List of persons.'
+  route_name: entity.jnavi_person.collection
+  parent: system.admin_content

@@ -1,0 +1,10 @@
+entity.jnavi_person.edit_form:
+  route_name: entity.jnavi_person.edit_form
+  group: jnavi_person
+  title: 'Edit'
+
+entity.jnavi_person.delete_form:
+  route_name: entity.jnavi_person.delete_form
+  group: jnavi_person
+  title: 'Delete'
+  weight: 10

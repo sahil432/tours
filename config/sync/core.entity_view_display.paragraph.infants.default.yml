@@ -1,0 +1,43 @@
+uuid: ac1f6e11-f54b-4d3b-a6bd-5a97c9b51f5f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.infants.field_age
+    - field.field.paragraph.infants.field_infants
+    - field.field.paragraph.infants.field_name
+    - paragraphs.paragraphs_type.infants
+  module:
+    - entity_reference_revisions
+id: paragraph.infants.default
+targetEntityType: paragraph
+bundle: infants
+mode: default
+content:
+  field_age:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_infants:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

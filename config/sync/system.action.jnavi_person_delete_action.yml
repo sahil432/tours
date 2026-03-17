@@ -1,0 +1,13 @@
+uuid: 3639305e-313e-49b0-ac89-282770456f8a
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_persons
+_core:
+  default_config_hash: vn3fzkr7oBVSJFaIXvr43XyzXzONTC9y6k6YGILjg5g
+id: jnavi_person_delete_action
+label: 'Delete persons'
+type: jnavi_person
+plugin: 'entity:delete_action:jnavi_person'
+configuration: {  }

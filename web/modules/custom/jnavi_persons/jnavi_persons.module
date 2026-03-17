@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Provides a person entity type.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function jnavi_persons_theme(): array {
+  return [
+    'jnavi_person' => ['render element' => 'elements'],
+  ];
+}
+
+/**
+ * Prepares variables for person templates.
+ *
+ * Default template: jnavi-person.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the person information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_jnavi_person(array &$variables): void {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_gin_content_form_routes().
+ */
+function jnavi_persons_gin_content_form_routes() {
+  return [
+    'entity.jnavi_person.add_form',
+    'entity.jnavi_person.edit_form',
+    'entity.jnavi_person.content_translation_add',
+  ];
+}

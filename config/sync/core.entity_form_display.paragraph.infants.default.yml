@@ -1,0 +1,52 @@
+uuid: 4caee7c4-6642-47d1-ab99-04c7d5b5cd28
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.infants.field_age
+    - field.field.paragraph.infants.field_infants
+    - field.field.paragraph.infants.field_name
+    - paragraphs.paragraphs_type.infants
+  module:
+    - paragraphs
+id: paragraph.infants.default
+targetEntityType: paragraph
+bundle: infants
+mode: default
+content:
+  field_age:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_infants:
+    type: paragraphs
+    weight: 2
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+      features:
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings: {  }
+  field_name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

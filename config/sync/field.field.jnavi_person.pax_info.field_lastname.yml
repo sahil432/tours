@@ -1,0 +1,19 @@
+uuid: db40c3a0-cfa6-4842-a5e0-80da536bafd8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.jnavi_person.field_lastname
+    - jnavi_persons.jnavi_person_type.pax_info
+id: jnavi_person.pax_info.field_lastname
+field_name: field_lastname
+entity_type: jnavi_person
+bundle: pax_info
+label: Lastname
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
