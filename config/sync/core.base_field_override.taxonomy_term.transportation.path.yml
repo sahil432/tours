@@ -1,0 +1,20 @@
+uuid: 75ee73b2-f6a6-434d-9746-4f3d87804205
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.transportation
+  module:
+    - path
+id: taxonomy_term.transportation.path
+field_name: path
+entity_type: taxonomy_term
+bundle: transportation
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

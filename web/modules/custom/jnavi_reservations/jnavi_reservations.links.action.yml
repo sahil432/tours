@@ -1,0 +1,11 @@
+jnavi_reservation.type_add:
+  title: 'Add reservation type'
+  route_name: entity.jnavi_reservation_type.add_form
+  appears_on:
+    - entity.jnavi_reservation_type.collection
+
+jnavi_reservation.add_page:
+  title: 'Add reservation'
+  route_name: entity.jnavi_reservation.add_page
+  appears_on:
+    - entity.jnavi_reservation.collection

@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - jnavi_reservations.jnavi_reservation_type.hotel_reservation
     - node.type.tour
     - node.type.tour_start
   module:
@@ -74,6 +75,8 @@ type_settings:
       to: review
       weight: -2
   entity_types:
+    jnavi_reservation:
+      - hotel_reservation
     node:
       - tour
       - tour_start

@@ -36,6 +36,7 @@ module:
   inline_form_errors: 0
   j_navi_entity_clone: 0
   j_navi_itinerary_helper: 0
+  jnavi_reservations: 0
   language: 0
   link: 0
   locale: 0

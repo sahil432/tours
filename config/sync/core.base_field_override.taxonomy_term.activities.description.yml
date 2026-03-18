@@ -1,0 +1,21 @@
+uuid: d08b4ada-bda6-4060-b3c0-55c769123488
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.activities
+  module:
+    - text
+id: taxonomy_term.activities.description
+field_name: description
+entity_type: taxonomy_term
+bundle: activities
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

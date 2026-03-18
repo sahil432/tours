@@ -1,0 +1,10 @@
+entity.jnavi_reservation.edit_form:
+  route_name: entity.jnavi_reservation.edit_form
+  group: jnavi_reservation
+  title: 'Edit'
+
+entity.jnavi_reservation.delete_form:
+  route_name: entity.jnavi_reservation.delete_form
+  group: jnavi_reservation
+  title: 'Delete'
+  weight: 10

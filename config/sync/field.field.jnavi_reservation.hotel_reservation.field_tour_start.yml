@@ -1,0 +1,25 @@
+uuid: fde60a6a-3c5f-4ace-a04b-2d27352ce16c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.jnavi_reservation.field_tour_start
+    - jnavi_reservations.jnavi_reservation_type.hotel_reservation
+id: jnavi_reservation.hotel_reservation.field_tour_start
+field_name: field_tour_start
+entity_type: jnavi_reservation
+bundle: hotel_reservation
+label: 'Tour Start'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: published_tour_start
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

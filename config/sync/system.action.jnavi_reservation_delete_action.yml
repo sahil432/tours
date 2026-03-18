@@ -1,0 +1,13 @@
+uuid: 47979e4a-001e-42a4-8a2c-a97647abcde5
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_reservations
+_core:
+  default_config_hash: 1RGNmx-3L4446JHFOdQi0UZ63RcFPF8s9jMeRzdpRz0
+id: jnavi_reservation_delete_action
+label: 'Delete reservations'
+type: jnavi_reservation
+plugin: 'entity:delete_action:jnavi_reservation'
+configuration: {  }

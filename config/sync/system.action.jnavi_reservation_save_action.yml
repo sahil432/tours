@@ -1,0 +1,13 @@
+uuid: e13ea420-14bf-41cb-8c6d-55003e9db5e5
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_reservations
+_core:
+  default_config_hash: FYYEPg4HlvJW8u3gI0KrVYqSjcvUWdTiUailH-2tfjM
+id: jnavi_reservation_save_action
+label: 'Save reservations'
+type: jnavi_reservation
+plugin: 'entity:save_action:jnavi_reservation'
+configuration: {  }
