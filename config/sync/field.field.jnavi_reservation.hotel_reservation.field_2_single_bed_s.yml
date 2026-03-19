@@ -1,0 +1,25 @@
+uuid: 490eb368-df34-424e-959c-c4d733446cd3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.jnavi_reservation.field_2_single_bed_s
+    - jnavi_reservations.jnavi_reservation_type.hotel_reservation
+id: jnavi_reservation.hotel_reservation.field_2_single_bed_s
+field_name: field_2_single_bed_s
+entity_type: jnavi_reservation
+bundle: hotel_reservation
+label: 'Total 2 Single Bed(s)'
+description: 'Enter the total number of rooms with single beds required, The actual booking will depend on this count.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

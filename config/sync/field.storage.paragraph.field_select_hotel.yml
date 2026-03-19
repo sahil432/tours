@@ -1,0 +1,20 @@
+uuid: 2889a804-7ff7-439f-9bc1-9f2aac042e93
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - taxonomy
+id: paragraph.field_select_hotel
+field_name: field_select_hotel
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

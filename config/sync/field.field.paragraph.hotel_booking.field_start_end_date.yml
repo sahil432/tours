@@ -1,0 +1,21 @@
+uuid: a1f1a54c-7475-434d-bb2d-59c3e5a97c1f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_start_end_date
+    - paragraphs.paragraphs_type.hotel_booking
+  module:
+    - datetime_range
+id: paragraph.hotel_booking.field_start_end_date
+field_name: field_start_end_date
+entity_type: paragraph
+bundle: hotel_booking
+label: 'Start & End Date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

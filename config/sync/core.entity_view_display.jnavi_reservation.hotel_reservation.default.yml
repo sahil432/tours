@@ -3,9 +3,13 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.jnavi_reservation.hotel_reservation.field_2_single_bed_s
+    - field.field.jnavi_reservation.hotel_reservation.field_hotel_mapping
+    - field.field.jnavi_reservation.hotel_reservation.field_total_double_bed_rooms
     - field.field.jnavi_reservation.hotel_reservation.field_tour_start
     - jnavi_reservations.jnavi_reservation_type.hotel_reservation
   module:
+    - entity_reference_revisions
     - user
 id: jnavi_reservation.hotel_reservation.default
 targetEntityType: jnavi_reservation
@@ -35,6 +39,33 @@ content:
         refresh: 60
     third_party_settings: {  }
     weight: 20
+    region: content
+  field_2_single_bed_s:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 25
+    region: content
+  field_hotel_mapping:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 24
+    region: content
+  field_total_double_bed_rooms:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 26
     region: content
   field_tour_start:
     type: entity_reference_label

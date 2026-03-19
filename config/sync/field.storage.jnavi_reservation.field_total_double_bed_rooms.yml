@@ -1,0 +1,20 @@
+uuid: 94b52c4c-1b07-4f42-ad65-20c0f71a89b6
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_reservations
+id: jnavi_reservation.field_total_double_bed_rooms
+field_name: field_total_double_bed_rooms
+entity_type: jnavi_reservation
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

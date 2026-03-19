@@ -61,7 +61,7 @@ class ItineraryHooks {
         continue;
       }
 
-      $day_number = $delta + 1;
+      $day_number = $delta + 2;
 
       if (isset($element['top']['type']['label']['#markup'])) {
         $original = strip_tags($element['top']['type']['label']['#markup']);
