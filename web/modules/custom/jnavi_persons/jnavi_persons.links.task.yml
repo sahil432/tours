@@ -1,0 +1,26 @@
+entity.jnavi_person.view:
+  title: 'View'
+  route_name: entity.jnavi_person.canonical
+  base_route: entity.jnavi_person.canonical
+entity.jnavi_person.edit_form:
+  title: 'Edit'
+  route_name: entity.jnavi_person.edit_form
+  base_route: entity.jnavi_person.canonical
+entity.jnavi_person.delete_form:
+  title: 'Delete'
+  route_name: entity.jnavi_person.delete_form
+  base_route: entity.jnavi_person.canonical
+  weight: 10
+entity.jnavi_person.collection:
+  title: 'Persons'
+  route_name: entity.jnavi_person.collection
+  base_route: system.admin_content
+  weight: 10
+entity.jnavi_person_type.edit_form:
+  title: 'Edit'
+  route_name: entity.jnavi_person_type.edit_form
+  base_route: entity.jnavi_person_type.edit_form
+entity.jnavi_person_type.collection:
+  title: 'List'
+  route_name: entity.jnavi_person_type.collection
+  base_route: entity.jnavi_person_type.collection

@@ -1,0 +1,13 @@
+uuid: 65a4c9df-ce91-4274-bc04-95454ef264e0
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_persons
+_core:
+  default_config_hash: YHOunQ5EgHwDFFhX9clrF2zh8cG_fvfB_xpYNX8u3Hk
+id: jnavi_person_save_action
+label: 'Save persons'
+type: jnavi_person
+plugin: 'entity:save_action:jnavi_person'
+configuration: {  }

@@ -1,0 +1,20 @@
+access jnavi_person overview:
+  title: 'Access person overview page'
+administer jnavi_person types:
+  title: 'Administer person types'
+  description: 'Maintain the types of jnavi person entity.'
+  restrict access: true
+view jnavi_person:
+  title: 'View person'
+edit jnavi_person:
+  title: 'Edit person'
+delete jnavi_person:
+  title: 'Delete person'
+create jnavi_person:
+  title: 'Create person'
+view jnavi_person revision:
+  title: 'View person revision'
+revert jnavi_person revision:
+  title: 'Revert person revision'
+delete jnavi_person revision:
+  title: 'Delete person revision'

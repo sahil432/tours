@@ -1,0 +1,19 @@
+uuid: 8908fc8d-cfec-4336-add8-2260d2ea04f4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.jnavi_person.field_firstname
+    - jnavi_persons.jnavi_person_type.pax_info
+id: jnavi_person.pax_info.field_firstname
+field_name: field_firstname
+entity_type: jnavi_person
+bundle: pax_info
+label: Firstname
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

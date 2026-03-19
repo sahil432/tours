@@ -1,0 +1,19 @@
+uuid: 1f8001e0-7d48-42d9-a558-2fe103be966a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_name
+    - paragraphs.paragraphs_type.infants
+id: paragraph.infants.field_name
+field_name: field_name
+entity_type: paragraph
+bundle: infants
+label: Name
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_persons
+id: jnavi_person_save_action
+label: 'Save persons'
+type: jnavi_person
+plugin: entity:save_action:jnavi_person
+configuration: {  }

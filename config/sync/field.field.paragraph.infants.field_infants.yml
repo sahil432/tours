@@ -1,0 +1,33 @@
+uuid: d5afef49-f199-4734-9d6f-8be32d539747
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_infants
+    - paragraphs.paragraphs_type.infants
+  module:
+    - entity_reference_revisions
+id: paragraph.infants.field_infants
+field_name: field_infants
+entity_type: paragraph
+bundle: infants
+label: Infants
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      infants: infants
+    negate: 0
+    target_bundles_drag_drop:
+      infants:
+        weight: 3
+        enabled: true
+      itinerary_day:
+        weight: 4
+        enabled: false
+field_type: entity_reference_revisions
