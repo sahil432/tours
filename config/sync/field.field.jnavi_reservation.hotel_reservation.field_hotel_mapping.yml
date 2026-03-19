@@ -1,0 +1,34 @@
+uuid: b74866dd-83e0-417e-bba8-ef1d4e57a9dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.jnavi_reservation.field_hotel_mapping
+    - jnavi_reservations.jnavi_reservation_type.hotel_reservation
+    - paragraphs.paragraphs_type.hotel_booking
+  module:
+    - entity_reference_revisions
+id: jnavi_reservation.hotel_reservation.field_hotel_mapping
+field_name: field_hotel_mapping
+entity_type: jnavi_reservation
+bundle: hotel_reservation
+label: 'Hotel Mapping'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      hotel_booking: hotel_booking
+    negate: 0
+    target_bundles_drag_drop:
+      hotel_booking:
+        weight: 3
+        enabled: true
+      itinerary_day:
+        weight: 4
+        enabled: false
+field_type: entity_reference_revisions

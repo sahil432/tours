@@ -1,0 +1,25 @@
+uuid: dd626ae7-1a2c-457f-81c0-d684866d7c0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_1_double_bed
+    - paragraphs.paragraphs_type.hotel_booking
+id: paragraph.hotel_booking.field_1_double_bed
+field_name: field_1_double_bed
+entity_type: paragraph
+bundle: hotel_booking
+label: '1 Double Bed'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

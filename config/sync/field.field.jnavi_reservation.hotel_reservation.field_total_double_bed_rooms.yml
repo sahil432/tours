@@ -1,0 +1,25 @@
+uuid: aee08143-0796-4bb0-a62d-91319cc96dd8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.jnavi_reservation.field_total_double_bed_rooms
+    - jnavi_reservations.jnavi_reservation_type.hotel_reservation
+id: jnavi_reservation.hotel_reservation.field_total_double_bed_rooms
+field_name: field_total_double_bed_rooms
+entity_type: jnavi_reservation
+bundle: hotel_reservation
+label: 'Total Double Bed Rooms'
+description: 'Enter the total number of rooms with Double beds required, The actual booking will depend on this count.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

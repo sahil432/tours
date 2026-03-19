@@ -1,0 +1,20 @@
+uuid: 8bbeb119-4999-4514-97e9-af4c3656d193
+langcode: en
+status: true
+dependencies:
+  module:
+    - jnavi_reservations
+id: jnavi_reservation.field_2_single_bed_s
+field_name: field_2_single_bed_s
+entity_type: jnavi_reservation
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

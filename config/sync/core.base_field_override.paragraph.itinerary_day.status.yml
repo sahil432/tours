@@ -1,0 +1,22 @@
+uuid: 0e917220-c57d-4d92-af3f-75362193661e
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.itinerary_day
+id: paragraph.itinerary_day.status
+field_name: status
+entity_type: paragraph
+bundle: itinerary_day
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

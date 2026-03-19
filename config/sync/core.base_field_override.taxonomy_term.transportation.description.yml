@@ -1,0 +1,21 @@
+uuid: 2b26ac24-d8e5-4cef-b029-81a60f4df7f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.transportation
+  module:
+    - text
+id: taxonomy_term.transportation.description
+field_name: description
+entity_type: taxonomy_term
+bundle: transportation
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

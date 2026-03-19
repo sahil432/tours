@@ -1,0 +1,18 @@
+uuid: d13be348-912b-47f7-8abe-eb44a1afd6e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.sightseeing
+id: taxonomy_term.sightseeing.name
+field_name: name
+entity_type: taxonomy_term
+bundle: sightseeing
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

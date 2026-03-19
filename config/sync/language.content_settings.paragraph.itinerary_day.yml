@@ -1,9 +1,9 @@
-uuid: 1b7adac8-6205-4ead-94e1-0ed4d1f3f65b
+uuid: ef492c66-b5dc-4a02-8daa-a1325aafb43f
 langcode: en
 status: true
 dependencies:
   config:
-    - taxonomy.vocabulary.activities
+    - paragraphs.paragraphs_type.itinerary_day
   module:
     - content_translation
 third_party_settings:
@@ -11,8 +11,8 @@ third_party_settings:
     enabled: false
     bundle_settings:
       untranslatable_fields_hide: '0'
-id: taxonomy_term.activities
-target_entity_type_id: taxonomy_term
-target_bundle: activities
+id: paragraph.itinerary_day
+target_entity_type_id: paragraph
+target_bundle: itinerary_day
 default_langcode: site_default
 language_alterable: false

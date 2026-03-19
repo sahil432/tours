@@ -1,0 +1,21 @@
+uuid: 1b63c46f-2ffa-4945-beb5-ac5e4a291aa1
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - jnavi_reservations
+    - paragraphs
+id: jnavi_reservation.field_hotel_mapping
+field_name: field_hotel_mapping
+entity_type: jnavi_reservation
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,9 +1,9 @@
-uuid: 06a3bc9a-b84c-4ba4-b925-352b1e6fb391
+uuid: 1d763a6f-80df-4268-9380-bb1483ba685b
 langcode: en
 status: true
 dependencies:
   config:
-    - node.type.tour
+    - jnavi_reservations.jnavi_reservation_type.hotel_reservation
   module:
     - content_translation
 third_party_settings:
@@ -11,8 +11,8 @@ third_party_settings:
     enabled: true
     bundle_settings:
       untranslatable_fields_hide: '1'
-id: node.tour
-target_entity_type_id: node
-target_bundle: tour
+id: jnavi_reservation.hotel_reservation
+target_entity_type_id: jnavi_reservation
+target_bundle: hotel_reservation
 default_langcode: site_default
 language_alterable: true

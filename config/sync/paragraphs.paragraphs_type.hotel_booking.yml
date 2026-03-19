@@ -1,0 +1,35 @@
+uuid: f83a7d60-281b-4d33-b875-9b3cda397220
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_redirect
+third_party_settings:
+  entity_redirect:
+    redirect:
+      anonymous:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+      add:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+      edit:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+      delete:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+id: hotel_booking
+label: 'Hotel Booking'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

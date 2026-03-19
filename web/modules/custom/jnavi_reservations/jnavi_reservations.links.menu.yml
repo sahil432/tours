@@ -1,0 +1,11 @@
+entity.jnavi_reservation_type.collection:
+  title: 'Reservation types'
+  description: 'Manage and CRUD actions on Reservation type.'
+  parent: system.admin_structure
+  route_name: entity.jnavi_reservation_type.collection
+
+entity.jnavi_reservation.collection:
+  title: 'Reservations'
+  description: 'List of reservations.'
+  route_name: entity.jnavi_reservation.collection
+  parent: system.admin_content

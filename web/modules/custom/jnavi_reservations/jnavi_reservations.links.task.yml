@@ -1,0 +1,29 @@
+entity.jnavi_reservation.canonical:
+  route_name: entity.jnavi_reservation.canonical
+  title: 'View'
+
+entity.jnavi_reservation.version_history:
+  route_name: entity.jnavi_reservation.version_history
+  title: 'Revisions'
+  weight: 5
+
+entity.jnavi_reservation.edit_form:
+  route_name: entity.jnavi_reservation.edit_form
+  title: 'Edit'
+  weight: 0
+
+entity.jnavi_reservation.delete_form:
+  route_name: entity.jnavi_reservation.delete_form
+  title: 'Delete'
+  weight: 10
+
+entity.jnavi_reservation_type.edit_form:
+  route_name: entity.jnavi_reservation_type.edit_form
+  title: 'Edit'
+  base_route: entity.jnavi_reservation_type.edit_form
+  weight: 0
+
+entity.jnavi_reservation.collection:
+  title: 'Reservations'
+  route_name: entity.jnavi_reservation.collection
+  base_route: system.admin_content

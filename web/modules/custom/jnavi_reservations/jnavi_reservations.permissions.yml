@@ -1,0 +1,20 @@
+access jnavi_reservation overview:
+  title: 'Access reservation overview page'
+administer jnavi_reservation types:
+  title: 'Administer reservation types'
+  description: 'Maintain the types of jnavi reservation entity.'
+  restrict access: true
+view jnavi_reservation:
+  title: 'View reservation'
+edit jnavi_reservation:
+  title: 'Edit reservation'
+delete jnavi_reservation:
+  title: 'Delete reservation'
+create jnavi_reservation:
+  title: 'Create reservation'
+view jnavi_reservation revision:
+  title: 'View reservation revision'
+revert jnavi_reservation revision:
+  title: 'Revert reservation revision'
+delete jnavi_reservation revision:
+  title: 'Delete reservation revision'
