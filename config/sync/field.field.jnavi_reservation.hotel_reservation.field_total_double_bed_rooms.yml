@@ -9,7 +9,7 @@ id: jnavi_reservation.hotel_reservation.field_total_double_bed_rooms
 field_name: field_total_double_bed_rooms
 entity_type: jnavi_reservation
 bundle: hotel_reservation
-label: 'Total Double Bed Rooms'
+label: 'Double Bed Rooms'
 description: 'Enter the total number of rooms with Double beds required, The actual booking will depend on this count.'
 required: true
 translatable: false
