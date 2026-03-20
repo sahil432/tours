@@ -3,8 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.hotel_booking.field_1_double_bed
-    - field.field.paragraph.hotel_booking.field_2_single_bed_s
     - field.field.paragraph.hotel_booking.field_select_hotel
     - field.field.paragraph.hotel_booking.field_start_end_date
     - paragraphs.paragraphs_type.hotel_booking
@@ -15,24 +13,6 @@ targetEntityType: paragraph
 bundle: hotel_booking
 mode: default
 content:
-  field_1_double_bed:
-    type: number_integer
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_2_single_bed_s:
-    type: number_integer
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    weight: 5
-    region: content
   field_select_hotel:
     type: entity_reference_label
     label: above

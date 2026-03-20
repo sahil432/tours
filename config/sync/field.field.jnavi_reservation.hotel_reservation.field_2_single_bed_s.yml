@@ -9,7 +9,7 @@ id: jnavi_reservation.hotel_reservation.field_2_single_bed_s
 field_name: field_2_single_bed_s
 entity_type: jnavi_reservation
 bundle: hotel_reservation
-label: 'Total 2 Single Bed(s)'
+label: '2 Single Bed(s)'
 description: 'Enter the total number of rooms with single beds required, The actual booking will depend on this count.'
 required: true
 translatable: false
